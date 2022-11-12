@@ -2,26 +2,25 @@ clear; clc
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
 %% important parameters
-opts.fs = 97656;
+opts.fs = 384e3;
 % for continuous / seperated
 singleDuration = 3000;
 s2CutOff = 2000;
 ICIBase = [24];
-ratio = [1.5, 2.3 2.5];
+ratio = [1.1, 2.5];
 s1ICI = repmat(ICIBase, 1, length(ratio)); % ms
 s2ICI = [];
 for s=1:length(ratio)
     s2ICI = [s2ICI,ICIBase * ratio(s)];
 end
-% s2ICI = [ICIBase .* ratio(1),ICIBase * ratio(2)];
-% s2ICI = ICIBase * ratio;
+
 interval = 0; % ms
 
-opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_TITS"));
+opts.rootPath = fullfile('..\..\humanSounds', strcat(datestr(now, "yyyy-mm-dd"), "_TITS"));
 mkdir(opts.rootPath);
 
 %% generate single click
-opts.Amp = 0.1;
+opts.Amp = 1;
 opts.AmpS1 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s1ICI), "UniformOutput", false);
 opts.AmpS2 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s2ICI), "UniformOutput", false);
 opts.riseFallTime = 0; % ms
@@ -56,8 +55,8 @@ opts.fileNameTemp = [num2str(singleDuration/1000), 's_[s2ICI]_RegStdDev.wav'];
 opts.fileNameRep = '[s2ICI]';
 disp("exporting regular click train sounds...");
 exportSoundFile({longTermRegWaveContinuous.s1s2}, opts)
-opts.folderName = 'interval 0 Norm Sqrt';
-exportSoundFile({longTermRegWaveContinuousNorm.s1s2}, opts)
+% opts.folderName = 'interval 0 Norm Sqrt';
+% exportSoundFile({longTermRegWaveContinuousNorm.s1s2}, opts)
 
 % save continuous regular long term click train
 opts.ICIName = [s1ICI' s2ICI']; 
@@ -65,8 +64,8 @@ opts.folderName = 'interval 0';
 opts.fileNameTemp = [num2str(singleDuration/1000), 's_[s2ICI]_RegDevStd.wav'];
 opts.fileNameRep = '[s2ICI]';
 exportSoundFile({longTermRegWaveContinuous.s2s1}, opts)
-opts.folderName = 'interval 0 Norm Sqrt';
-exportSoundFile({longTermRegWaveContinuousNorm.s2s1}, opts)
+% opts.folderName = 'interval 0 Norm Sqrt';
+% exportSoundFile({longTermRegWaveContinuousNorm.s2s1}, opts)
 
 
 %%  irregular
@@ -101,7 +100,7 @@ longTermIrregWaveDevStdSeperated = mergeSingleWave(s2IrregWaveTailRep, s1IrregWa
 % save continuous irregular long term click train
 opts.ICIName = [s1ICI' s2ICI']; 
 opts.folderName = 'interval 0';
-opts.fileNameTemp = '[s2ICI]_IrregStdDev.wav';
+opts.fileNameTemp = [num2str(singleDuration/1000), 's_[s2ICI]_IrregStdDev.wav'];
 opts.fileNameRep = '[s2ICI]';
 disp("exporting irregular click train sounds...");
 exportSoundFile({longTermIrregWaveStdDevContinuous.s1s2}, opts)
@@ -110,7 +109,7 @@ exportSoundFile({longTermIrregWaveStdDevContinuous.s1s2}, opts)
 % save continuous irregular long term click train
 opts.ICIName = [s1ICI' s2ICI']; 
 opts.folderName = 'interval 0';
-opts.fileNameTemp = '[s2ICI]_IrregDevStd.wav';
+opts.fileNameTemp = [num2str(singleDuration/1000), 's_[s2ICI]_IrregDevStd.wav'];
 opts.fileNameRep = '[s2ICI]';
 exportSoundFile({longTermIrregWaveDevStdContinuous.s1s2}, opts)
 

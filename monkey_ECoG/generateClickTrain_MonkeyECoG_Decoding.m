@@ -1,19 +1,19 @@
 clear;
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
-irregRepN = 0;
-regRepN = 0;
+irregRepN = [0];
+regRepN = [0];
 
 %% important parameters
 opts.fs = 97656;
-opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_Offset_15"));
+opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_Decoding"));
 mkdir(opts.rootPath);
 
 % for decode
 
-% decodeICI = [15, 30, 60, 120];
-decodeICI = 15;
-decodeDuration = 4000; % ms
+
+decodeICI = [4, 4.1, 4.2, 4.3, 4.4];
+decodeDuration = 200; % ms
 
 
 %% generate single click
@@ -56,7 +56,7 @@ end
 % save irregular single click train
 opts.ICIName = opts.ICIs; 
 opts.folderName = 'decoding';
-opts.fileNameTemp = [num2str(fix(decodeDuration/1000)), 's_[ICI]_Irreg_Rep', num2str(irregRepN(dIndex)), '.wav'];
+opts.fileNameTemp = [num2str(fix(decodeDuration)), 'ms_[ICI]_Irreg_Rep', num2str(irregRepN(dIndex)), '.wav'];
 opts.fileNameRep = '[ICI]';
 disp("exporting decoding sounds...");
 exportSoundFile(singleIrregWave{dIndex}, opts)
@@ -75,8 +75,8 @@ end
 
 % save regular single click train
 opts.ICIName = opts.ICIs; 
-opts.folderName = 'offset';
-opts.fileNameTemp = [num2str(fix(decodeDuration/1000)), 's_[ICI]_Reg_Rep', num2str(regRepN(dIndex)), '.wav'];
+opts.folderName = 'decoding';
+opts.fileNameTemp = [num2str(fix(decodeDuration)), 'ms_[ICI]_Reg_Rep', num2str(regRepN(dIndex)), '.wav'];
 opts.fileNameRep = '[ICI]';
 exportSoundFile(singleRegWave{dIndex}, opts)
 end

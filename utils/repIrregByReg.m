@@ -14,11 +14,11 @@ clickDurN = ceil(clickDur / 1000 * fs);
 switch pos
     case 'head'
         for i = 1 : length(irregSampN)
-            irregSampN{i}(1 : repN) = regSampN{i}(1);
+            irregSampN{i}(1 : repN) = regSampN{i}(1 : repN);
         end
     case 'tail'
         for i = 1 : length(irregSampN)
-            irregSampN{i}((end - repN + 1) : end) = regSampN{i}(1);
+            irregSampN{i}((end - repN + 1) : end) = regSampN{i}(1 : repN);
         end
 end
 

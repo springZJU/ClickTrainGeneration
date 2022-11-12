@@ -1,8 +1,8 @@
 clear;
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
-irregRepN = 0;
-regRepN = 0;
+irregRepN = [1, 5, 10, 20, 40];
+regRepN = [0, 5, 10, 20, 40];
 
 %% important parameters
 opts.fs = 97656;
@@ -12,7 +12,7 @@ mkdir(opts.rootPath);
 % for decode
 
 % decodeICI = [15, 30, 60, 120];
-decodeICI = 15;
+decodeICI = [15, 30, 60];
 decodeDuration = 4000; % ms
 
 
