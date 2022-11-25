@@ -1,0 +1,11 @@
+{
+    "_schemaVersion": "1.0.0",
+
+       "pickUpHeadTail": {
+        "inputs": [
+            {"name": "data", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},
+            {"name": "ratio", "kind": "required",  "type": ["numeric", "numel=1"], "purpose": "length compared to raw, must < 1"},
+            {"name": "type", "kind": "required",  "type": ["char", "choices={'cumsum','length'}"], "purpose": "cut according to length of data or cumsum of data"}
+        ]
+       }
+}

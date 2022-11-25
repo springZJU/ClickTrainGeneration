@@ -1,25 +1,21 @@
-clear;
+clearvars -except  singleDuration s1CutOff s2CutOff ICIBase ratio Amp folderName
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
-singleDuration = [1000 1000 2000 ]; % ms
-s1CutOff = [{500}, {[]}, {[]}]; % if empty, do not cut
-s2CutOff = [{[]}, {[]}, {1000}]; % if empty, do not cut
-
 
 for dIndex = 1 : length(singleDuration)
-    clearvars -except singleDuration s1CutOff s2CutOff opts dIndex; clc
+    clearvars -except singleDuration s1CutOff s2CutOff opts dIndex ICIBase ratio Amp folderName; clc
     %% important parameters
     opts(dIndex).fs = 97656;
     % for continuous / seperated
 
-    s1ICI = [2   , 4,    6,    8 ,   12,    2   , 4,    6,    8 ,   12]; % ms
-    s2ICI = [2.03, 4.06, 6.09, 8.12, 12.18, 2.2 , 4.4,  6.6,  8.8 , 13.2];
+    s1ICI = repmat(ICIBase, 1, length(ratio)); % ms
+    s2ICI = reshape(ICIBase' * ratio, 1, []);
     interval = 0; % ms
-    opts(dIndex).rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_Duration"));
+    opts(dIndex).rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
     mkdir(opts(dIndex).rootPath);
 
     %% generate single click
-    opts(dIndex).Amp = 0.1;
+    opts(dIndex).Amp = Amp;
     opts(dIndex).AmpS1 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts(dIndex).Amp, 2), num2cell(s1ICI), "UniformOutput", false);
     opts(dIndex).AmpS2 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts(dIndex).Amp, 2), num2cell(s2ICI), "UniformOutput", false);
     opts(dIndex).riseFallTime = 0; % ms

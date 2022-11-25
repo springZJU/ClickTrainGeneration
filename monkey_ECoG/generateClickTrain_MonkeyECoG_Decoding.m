@@ -1,23 +1,19 @@
 clear;
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
-irregRepN = [0];
-regRepN = [0];
+irregRepN = 0;
+regRepN = 0;
 
 %% important parameters
 opts.fs = 97656;
-opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_Decoding"));
+opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 mkdir(opts.rootPath);
 
 % for decode
-
-
 decodeICI = [4, 4.1, 4.2, 4.3, 4.4];
 decodeDuration = 200; % ms
 
-
 %% generate single click
-
 opts.Amp = 1;
 opts.clickDur = 0.2 ; % ms
 opts.riseFallTime = 0; % ms
@@ -31,7 +27,6 @@ opts.ICIs = decodeICI; % ms
 
 % generate regular click train
 [~, regDur, ~, regClickTrainSampN] = generateRegClickTrain(opts);
-
 
 %% irregular
 % generate irregular click train

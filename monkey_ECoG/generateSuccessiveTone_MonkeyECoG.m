@@ -1,23 +1,27 @@
-clear; clc;
+
+clearvars -except Amp cutLength toneLength f1 f2 singleLength folderName
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
-Amp = 1;
+
+
 fs = 97656;
-toneLength = 3000; % ms
-cutLength = 4000; % ms
+
+
 riseFallTime = 0; % ms
 
-% rootPath = fullfile('..\ratSounds', datestr(now, "yyyy-mm-dd"));
-% rootPath = fullfile('..\monkeySounds', datestr(now, "yyyy-mm-dd"));
-rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_Tone"));
+opts.fs = fs;
+opts.soundLength = toneLength; % 
+opts.successiveDuration = singleLength;
 
-mkdir(fullfile(rootPath, 'interval 0'));
+ rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
+
+
+mkdir(fullfile(rootPath, 'successive interval 0'));
 % InitializePsychSound
 % PsychPortAudio('Close');
 % pahandle = PsychPortAudio('Open', [], 1, 1, fs, 2);
 
-f1 = [500,      500,    250,      250];
-f2 = [492.6108, 333.33, 246.3054, 166.67];
+
 
 for index = 1 : length(f2)
     t = 1/fs : 1 /fs : (toneLength / 1000);
@@ -41,35 +45,23 @@ for index = 1 : length(f2)
     tone2(tF) = tone2(tF) .* sigFall;
 
 %     [~, ~, zeroIdx1] = findZeroPoint(tone1); % cross zero point, NP
-    [~, ind] = find(abs(tone1) < 1e-3 & tone1 - [tone1(2 : end) 0] < 0);
+    [~, ind] = find(abs(tone1) < 1e-2 & tone1 - [tone1(2 : end) 0] < 0);
     tone1 = tone1(1 : ind(end));
     tone1(end) = 0;
 %     [~, ~, zeroIdx2] = findZeroPoint(tone2);
-    [~, ind] = find(abs(tone2) < 1e-3 & tone2 - [tone2(2 : end) 0] < 0);
+    [~, ind] = find(abs(tone2) < 1e-2 & tone2 - [tone2(2 : end) 0] < 0);
     tone2 = tone2(1 : ind(end));
     tone2(end) = 0;
 
+
     % merge tone
-    cutIndex = 1/fs : 1/fs : length([tone1 tone2]) / fs  < cutLength / 1000;
-    wave1 = [tone1 tone2];
-    wave1 = wave1(cutIndex);
-    wave2 = [tone2 tone1];
-    wave2 = wave2(cutIndex);
+    wave1 = mergeSuccessiveTone(tone1, tone2, 0, opts, []);
 
-    % cut off last signals for merged tone
-    [~, ~, zeroIdx1] = findZeroPoint(wave1); % cross zero point, NP
-    wave1(zeroIdx1(end) : end) = [];
-    [~, ~, zeroIdx2] = findZeroPoint(wave2);
-    wave2(zeroIdx2(end) : end) = [];
+    wave1Str = strcat(num2str(fix(f1(index))), "_", num2str(fix(f2(index))), "_Successive_PT_", num2str(toneLength), ".wav");
 
-    wave1Str = strcat(num2str(fix(f1(index))), "_", num2str(fix(f2(index))) , "_PT.wav");
-    wave2Str = strcat(num2str(fix(f2(index))), "_", num2str(fix(f1(index))) , "_PT.wav");
-    tone1Str = strcat("single", num2str(fix(f1(index))), "_PT.wav");
-    tone2Str = strcat("single", num2str(fix(f2(index))), "_PT.wav");
     % save sound
-    
-    audiowrite(fullfile(rootPath, 'interval 0', wave1Str), wave1, fs);
-    audiowrite(fullfile(rootPath, 'interval 0', wave2Str), wave2, fs);
+    audiowrite(fullfile(rootPath, 'successive interval 0', strcat(num2str(toneLength), "ms_", wave1Str)), wave1, fs);
+
 
 
     timeLength1 = length(tone1) / fs * 1000;

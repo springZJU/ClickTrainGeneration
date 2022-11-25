@@ -1,26 +1,21 @@
-clear; clc
+clearvars -except singleDuration s2CutOff ICIBase ratio Amp folderName  irregICISampNBase
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
+
+
 %% important parameters
-opts.fs = 384e3;
+opts.fs = 97656;
 % for continuous / seperated
-singleDuration = 3000;
-s2CutOff = 2000;
-ICIBase = [24];
-ratio = [1.1, 2.5];
 s1ICI = repmat(ICIBase, 1, length(ratio)); % ms
-s2ICI = [];
-for s=1:length(ratio)
-    s2ICI = [s2ICI,ICIBase * ratio(s)];
-end
+s2ICI = reshape(ICIBase' * ratio, 1, []);
 
 interval = 0; % ms
 
-opts.rootPath = fullfile('..\..\humanSounds', strcat(datestr(now, "yyyy-mm-dd"), "_TITS"));
+opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 mkdir(opts.rootPath);
 
 %% generate single click
-opts.Amp = 1;
+opts.Amp = Amp;
 opts.AmpS1 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s1ICI), "UniformOutput", false);
 opts.AmpS2 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s2ICI), "UniformOutput", false);
 opts.riseFallTime = 0; % ms

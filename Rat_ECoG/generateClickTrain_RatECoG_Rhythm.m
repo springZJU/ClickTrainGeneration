@@ -6,8 +6,8 @@ opts.fs = 97656;
 % for continuous / seperated
 singleDuration = 3000;
 s2CutOff = 2000;
-ICIBase = [18, 24];
-ratio = [1, 1.5, 2, 2.5, 100];
+ICIBase = [16];
+ratio = [1,2.5];
 s1ICI = repmat(ICIBase, 1, length(ratio)); % ms
 s2ICI = [];
 for s=1:length(ratio)

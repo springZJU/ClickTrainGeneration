@@ -32,7 +32,7 @@ opts.clickDur = 0.2 ; % ms
 click = generateClick(opts);
 
 %% for click train long term
-opts.repN = 3; % 
+opts.repN = 2; % 
 opts.click = click;
 opts.trainLength = 100; % ms, single train
 opts.soundLength = singleDuration; % ms, sound length, composed of N single trains

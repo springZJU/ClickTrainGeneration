@@ -1,30 +1,21 @@
-clear; clc
+
+clearvars -except singleDuration s2CutOff ICIBase ratio Amp folderName repNs rIndex irregICISampNBase
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
+
 %% important parameters
 opts.fs = 97656;
 % for continuous / seperated
-singleDuration = 3000;
-s2CutOff = 1000;
-ICIBase = [2 4 8 12 16 20];
-ratio = [1, 1.005, 1.01, 1.015, 1.1, 1.5];
+
 s1ICI = repmat(ICIBase, 1, length(ratio)); % ms
-s2ICI = [];
-for s=1:length(ratio)
-    s2ICI = [s2ICI,ICIBase * ratio(s)];
-end
-% s2ICI = [ICIBase .* ratio(1),ICIBase * ratio(2)];
-% s2ICI = ICIBase * ratio;
+s2ICI = reshape(ICIBase' * ratio, 1, []);
+
 interval = 0; % ms
-% opts.rootPath = fullfile("..\ratSounds", strcat(datestr(now, "yyyy-mm-dd"), "_4-4.06"));
-% opts.rootPath = fullfile("..\ratSounds", strcat("2022-10-11-", num2str(singleDuration/1000), "s"));
-% opts.rootPath = fullfile('..\..\ratSounds', datestr(now, "yyyy-mm-dd"));
-opts.rootPath = fullfile('..\..\monkeySounds', strcat("2022-10-31", "_Ratio"));
-% opts.rootPath = fullfile('..\monkeySounds', datestr(now, "yyyy-mm-dd"));
+opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 mkdir(opts.rootPath);
 
 %% generate single click
-opts.Amp = 0.1;
+opts.Amp = Amp;
 opts.AmpS1 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s1ICI), "UniformOutput", false);
 opts.AmpS2 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s2ICI), "UniformOutput", false);
 opts.riseFallTime = 0; % ms
@@ -32,7 +23,7 @@ opts.clickDur = 0.2 ; % ms
 click = generateClick(opts);
 
 %% for click train long term
-opts.repN = 0; % 
+opts.repN = repNs(rIndex); % 
 opts.click = click;
 opts.trainLength = 100; % ms, single train
 opts.soundLength = singleDuration; % ms, sound length, composed of N single trains
@@ -43,37 +34,27 @@ opts.ICIs = reshape([s1ICI; s2ICI], [], 1 ); % ms
 [RegWave, ~, ~, regClickTrainSampN] = generateRegClickTrain(opts);
 s1RegWave = RegWave(1 : 2 : end);
 s2RegWave = RegWave(2 : 2 : end);
-
-longTermRegWaveContinuous = mergeSingleWave(s1RegWave, s2RegWave, 0, opts, 1, s2CutOff);
-for sIndex = 1 : length(s1RegWave)
-    s1RegWave{sIndex} = opts.AmpS1{sIndex} / opts.Amp * s1RegWave{sIndex} ;
-    s2RegWave{sIndex} = opts.AmpS2{sIndex} / opts.Amp * s2RegWave{sIndex} ;
-end
-% normalize S2 SPL to S1 SPL 
-longTermRegWaveContinuousNorm = mergeSingleWave(s1RegWave, s2RegWave, 0, opts, 1, s2CutOff);
+s1RegWaveCopy = s1RegWave;
+s2RegWaveCopy = s2RegWave;
+longTermRegWaveContinuous = mergeSingleWave(s1RegWaveCopy, s2RegWaveCopy, 0, opts, 1, s2CutOff);
 
 % save continuous regular long term click train
 opts.ICIName = [s1ICI' s2ICI']; 
 opts.folderName = 'interval 0';
-opts.fileNameTemp = [num2str(singleDuration/1000), 's_[s2ICI]_RegStdDev.wav'];
+opts.fileNameTemp = [num2str(fix(singleDuration/1000)), 's_[s2ICI]_RegStdDev.wav'];
+
 opts.fileNameRep = '[s2ICI]';
 disp("exporting regular click train sounds...");
 exportSoundFile({longTermRegWaveContinuous.s1s2}, opts)
-opts.folderName = 'interval 0 Norm Sqrt';
-exportSoundFile({longTermRegWaveContinuousNorm.s1s2}, opts)
+
 
 % save continuous regular long term click train
 opts.ICIName = [s1ICI' s2ICI']; 
 opts.folderName = 'interval 0';
-opts.fileNameTemp = [num2str(singleDuration/1000), 's_[s2ICI]_RegDevStd.wav'];
+
+opts.fileNameTemp = [num2str(fix(singleDuration/1000)), 's_[s2ICI]_RegDevStd.wav'];
 opts.fileNameRep = '[s2ICI]';
 exportSoundFile({longTermRegWaveContinuous.s2s1}, opts)
-opts.folderName = 'interval 0 Norm Sqrt';
-exportSoundFile({longTermRegWaveContinuousNorm.s2s1}, opts)
-
-
-
-
 
 
 %% wave length for alignment
@@ -88,5 +69,5 @@ opts.soundRealDuration = soundRealDuration;
 opts.interval = interval;
 opts.singleDuration = singleDuration;
 
-save(fullfile(opts.rootPath, 'opts.mat'), 'opts');
+save(fullfile(opts.rootPath, ['opts.mat']), 'opts');
 

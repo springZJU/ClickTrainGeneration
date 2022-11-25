@@ -56,7 +56,7 @@ else
     s1Wave2Cut = s2Wave;
 end
 
-s1s2 = cellfun(@(x) [x{1}; intSampN; x{2}], array2VectorCell([s1Wave1Cut s2Wave2Cut]), 'UniformOutput', false);
+s1s2 = cellfun(@(x) [x{1}; intSampN; x{2}; click'], array2VectorCell([s1Wave1Cut s2Wave2Cut]), 'UniformOutput', false);
 s1Duration = cellfun(@(x) find(x == 1, 1 , 'last') / fs * 1000, s1Wave1Cut, 'UniformOutput', false);
 s1End = cellfun(@(x) length(x) / fs * 1000, s1Wave1Cut, 'UniformOutput', false);
 s1Str = cellfun(@(x) strcat(num2str(x), 'ms'), num2cell(ICIs(1 : 2: end)) , 'UniformOutput', false);
@@ -64,7 +64,7 @@ s2Str = cellfun(@(x) strcat(num2str(x), 'ms'), num2cell(ICIs(2 : 2: end)) , 'Uni
 res = struct('s1s2', s1s2, 's1Duration', s1Duration, 's1End', s1End, 's1Str', s1Str, 's2Str', s2Str);
 
 if reverseFlag
-    s2s1 = cellfun(@(x) [x{1}; x{2}], array2VectorCell([s1Wave2Cut s2Wave1Cut]), 'UniformOutput', false);
+    s2s1 = cellfun(@(x) [x{1}; x{2}; click'], array2VectorCell([s1Wave2Cut s2Wave1Cut]), 'UniformOutput', false);
     s2Duration = cellfun(@(x) find(x == 1, 1 , 'last') / fs * 1000, s1Wave2Cut, 'UniformOutput', false);
     s2End = cellfun(@(x) length(x) / fs * 1000, s1Wave2Cut, 'UniformOutput', false);
     res = addFieldToStruct(res, [s2s1 s2Duration s2End], {'s2s1'; 's2Duration'; 's2End'});

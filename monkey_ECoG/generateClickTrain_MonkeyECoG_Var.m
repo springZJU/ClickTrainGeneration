@@ -1,23 +1,20 @@
-clear;
+
+clearvars -except sigma s2ICI s1ICI folderName Amp ICIBase ratio singleDuration s2CutOff
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
-sigma = [200, 100, 50, 25, 10, 2]; % ms
 
 for dIndex = 1 : length(sigma)
     %% important parameters
     % basic
     opts(dIndex).fs = 97656;
-
-    opts(dIndex).rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_Var"));
+    interval = 0; % ms
+    opts(dIndex).rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
     % for continuous / seperated
-    s1ICI = [2   , 4,    6,    8 ,   12,    2   , 4,    6,    8 ,   12]; % ms
-    s2ICI = [2.03, 4.06, 6.09, 8.12, 12.18, 2.2 , 4.4,  6.6,  8.8 , 13.2];
-    singleDuration = 3000; % ms
-    interval = 600; % ms
-    s2CutOff = 1000; % if empty, do not cut
+    s1ICI = repmat(ICIBase, 1, length(ratio)); % ms
+    s2ICI = reshape(ICIBase' * ratio, 1, []);
 
     %% generate single click
-    opts(dIndex).Amp = 0.1;
+    opts(dIndex).Amp = Amp;
     opts(dIndex).AmpS1 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts(dIndex).Amp, 2), num2cell(s1ICI), "UniformOutput", false);
     opts(dIndex).AmpS2 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts(dIndex).Amp, 2), num2cell(s2ICI), "UniformOutput", false);    opts(dIndex).riseFallTime = 0; % ms
     opts(dIndex).clickDur = 0.2 ; % ms
@@ -64,7 +61,7 @@ for dIndex = 1 : length(sigma)
 
 
     longTermIrregWaveStdDevContinuous = mergeSingleWave(s1IrregWaveTailRep, s2IrregWaveHeadRep, 0, opts(dIndex), 0, s2CutOff);
-%     longTermIrregWaveStdDevSeperated = mergeSingleWave(s1IrregWaveTailRep, s2IrregWaveHeadRep, interval, opts(dIndex), 0, s2CutOff);
+    %     longTermIrregWaveStdDevSeperated = mergeSingleWave(s1IrregWaveTailRep, s2IrregWaveHeadRep, interval, opts(dIndex), 0, s2CutOff);
 
     % normalize S2 SPL to S1 SPL
     for sIndex = 1 : length(s1RegWave)
@@ -72,21 +69,21 @@ for dIndex = 1 : length(sigma)
         s2IrregWaveHeadRep{sIndex} = opts(dIndex).AmpS2{sIndex} / opts(dIndex).Amp * s2IrregWaveHeadRep{sIndex} ;
     end
     longTermIrregWaveStdDevContinuousNorm = mergeSingleWave(s1IrregWaveTailRep, s2IrregWaveHeadRep, 0, opts(dIndex), 0, s2CutOff);
-%     longTermIrregWaveStdDevSeperatedNorm = mergeSingleWave(opts(dIndex).AmpS1' ./ opts(dIndex).Amp * s1IrregWaveTailRep, opts(dIndex).AmpS2' ./ opts(dIndex).Amp * s2IrregWaveHeadRep, interval, opts(dIndex), 0, );
+    %     longTermIrregWaveStdDevSeperatedNorm = mergeSingleWave(opts(dIndex).AmpS1' ./ opts(dIndex).Amp * s1IrregWaveTailRep, opts(dIndex).AmpS2' ./ opts(dIndex).Amp * s2IrregWaveHeadRep, interval, opts(dIndex), 0, );
 
 
 
     % save continuous irregular long term click train
     opts(dIndex).ICIName = [s1ICI' s2ICI'];
     opts(dIndex).folderName = 'variance diff';
-    opts(dIndex).fileNameTemp = ['[s2ICI]_IrregDevStd_sigma_', num2str(sigma(dIndex)), '.wav'];
+    opts(dIndex).fileNameTemp = ['[s2ICI]_IrregStdDev_sigma_', num2str(sigma(dIndex)), '.wav'];
     opts(dIndex).fileNameRep = '[s2ICI]';
     exportSoundFile({longTermIrregWaveStdDevContinuous.s1s2}, opts(dIndex))
 
     % save normalized continuous irregular long term click train
     opts(dIndex).ICIName = [s1ICI' s2ICI'];
     opts(dIndex).folderName = 'variance diff NormSqrt';
-    opts(dIndex).fileNameTemp = ['[s2ICI]_IrregDevStd_sigma_', num2str(sigma(dIndex)), '.wav'];
+    opts(dIndex).fileNameTemp = ['[s2ICI]_IrregStdDev_sigma_', num2str(sigma(dIndex)), '.wav'];
     opts(dIndex).fileNameRep = '[s2ICI]';
     exportSoundFile({longTermIrregWaveStdDevContinuousNorm.s1s2}, opts(dIndex))
 

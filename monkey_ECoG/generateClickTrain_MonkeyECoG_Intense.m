@@ -1,30 +1,18 @@
-clear; clc
+clearvars -except Amp singleDuration s2CutOff ICIBase ratio folderName irregICISampNBase
 mPath = mfilename("fullpath");
 cd(fileparts(mPath));
 %% important parameters
 opts.fs = 97656;
 % for continuous / seperated
-singleDuration = 3000;
-s2CutOff = 1000;
-ICIBase = [2, 4];
-ratio = [1, 1.015, 1.1];
 s1ICI = repmat(ICIBase, 1, length(ratio)); % ms
-s2ICI = [];
-for s=1:length(ratio)
-    s2ICI = [s2ICI,ICIBase * ratio(s)];
-end
-% s2ICI = [ICIBase .* ratio(1),ICIBase * ratio(2)];
-% s2ICI = ICIBase * ratio;
+s2ICI = reshape(ICIBase' * ratio, 1, []);
+
 interval = 0; % ms
-% opts.rootPath = fullfile("..\ratSounds", strcat(datestr(now, "yyyy-mm-dd"), "_4-4.06"));
-% opts.rootPath = fullfile("..\ratSounds", strcat("2022-10-11-", num2str(singleDuration/1000), "s"));
-% opts.rootPath = fullfile('..\..\ratSounds', datestr(now, "yyyy-mm-dd"));
-opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_SPL"));
-% opts.rootPath = fullfile('..\monkeySounds', datestr(now, "yyyy-mm-dd"));
+ opts.rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 mkdir(opts.rootPath);
 
 %% generate single click
-opts.Amp = 0.1;
+opts.Amp = Amp;
 opts.AmpS1 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s1ICI), "UniformOutput", false);
 opts.AmpS2 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s2ICI), "UniformOutput", false);
 opts.riseFallTime = 0; % ms
@@ -90,7 +78,10 @@ exportSoundFile({longTermRegWaveContinuousChangeSPL.s2s1}, opts)
 % generate irregular click train
 opts.baseICI =  4; % ms
 opts.sigmaPara = 2; % sigma = μ / sigmaPara
-opts.irregICISampNBase = cell2mat(irregICISampN(opts));
+if ~exist("irregICISampNBase", "var")
+    irregICISampNBase = cell2mat(irregICISampN(opts));
+end
+opts.irregICISampNBase = irregICISampNBase;
 opts.irregLongTermSampN = opts.irregICISampNBase;
 [~, ~, ~, irregSampN] = generateIrregClickTrain(opts);
 
