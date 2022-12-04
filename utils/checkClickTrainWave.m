@@ -1,7 +1,7 @@
 %% check click train
-soundPath = "E:\ratNeuroPixel\monkeySounds\2022-11-25_MLA_Basic_4_8_16_Rep\interval 0";
+soundPath = "E:\ratNeuroPixel\monkeySounds\2022-11-17_MLA_TITS_40_24_26o4\interval 0";
 soundParse = clickTrainCheckFcn(soundPath);
-temp = soundParse(9);
+temp = soundParse(6);
 soundT = (1 : length(temp.y1)) / temp.fs * 1000;
 soundY = temp.y1;
 

@@ -1,0 +1,34 @@
+{
+    "_schemaVersion": "1.0.0",
+
+    "IrregClickGen": {
+        "inputs": [
+            {"name": "ICIs", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},
+            {"name": "Duration", "kind": "required", "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
+            {"name": "Amp", "kind": "required", "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
+            {"name": "baseICI", "kind": "ordered", "type": ["numeric", "numel=1"], "purpose": "1*1 double, for Irreg generatio, default: 4"},
+            {"name": "variance", "kind": "ordered", "type": ["numeric", "numel=1"], "purpose": "1*1 double, for Irreg generatio, default: 2"},
+            {"name": "irregICISampNBase", "kind": "namevalue", "type": ["numeric"]},
+            {"name": "repHead", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the head of Irreg waves consistent"},
+            {"name": "repTail", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the tail of Irreg waves consistent"}
+        ]
+    },
+
+    "pickUpHeadTail": {
+        "inputs": [
+            {"name": "data", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},
+            {"name": "ratio", "kind": "required",  "type": ["numeric", "numel=1"], "purpose": "length compared to raw, must < 1"},
+            {"name": "type", "kind": "required",  "type": ["char", "choices={'cumsum','length'}"], "purpose": "cut according to length of data or cumsum of data"}
+        ]
+    },
+
+
+
+    "RegClickGen": {
+        "inputs": [
+            {"name": "ICIs", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},
+            {"name": "Duration", "kind": "required",  "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
+            {"name": "Amp", "kind": "required",  "type": ["numeric", "numel=1"], "purpose": "1*1 double"}
+        ]
+    }
+}

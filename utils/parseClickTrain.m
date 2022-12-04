@@ -1,4 +1,4 @@
-function [yLength,sLength, cutLength, interval, changeHighIdx, toHighIdx, T, onIdx] = parseClickTrain(y1, fs, tCutoff)
+function [yLength, sLength, cutLength, interval, changeHighIdx, toHighIdx, T, onIdx] = parseClickTrain(y1, fs, tCutoff)
 onIdx = find(y1 > 0);
 toHighIdx = find(y1 == 0) + 1;
 changeHighIdx = [1; intersect(onIdx,toHighIdx)];
