@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'E:\ratNeuroPixel\monkeySounds\2022-11-17_MLA_Tone_Oscillation\successive interval 0';
+loadPath = 'E:\ratNeuroPixel\monkeySounds\2022-11-17_MLA_Offset_Reg\offset';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];
