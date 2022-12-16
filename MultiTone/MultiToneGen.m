@@ -3,13 +3,13 @@ function multiTone = MultiToneGen(varargin)
 %% To get parameters
 mIp = inputParser;
 mIp.addParameter("xlsxPath", ".\multiToneParameters_For_Generation.xlsx", @(x) isstring(x));
-mIp.addParameter("id", 1, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive', 'integer'}));
+mIp.addParameter("ID", 1, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive', 'integer'}));
 mIp.parse(varargin{:});
 
 xlsxPath = mIp.Results.xlsxPath;
-id = mIp.Results.id;
+ID = mIp.Results.ID;
 
-MultiToneParams = ParseMultiToneParams(xlsxPath, id);
+MultiToneParams = ParseMultiToneParams(xlsxPath, ID);
 parseStruct(MultiToneParams);
 assignin("caller", "fs", fs);
 
