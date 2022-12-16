@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'E:\ratNeuroPixel\monkeySounds\2022-11-17_MLA_Offset_Reg\offset';
+loadPath = 'E:\ratNeuroPixel\monkeySounds\2022-12-14_MLA_Offset_8_16_DiffVar_500ms\offset';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];
@@ -22,4 +22,4 @@ clearvars -except singleDuration soundParse
 
 % cellfun(@(x, y) sum(x(1 : (end - y))) / 97656 * 1000, {soundParse.interval}', num2cell([1;10;20;40;5;0;10;20;40;5]), "UniformOutput", false);
 % cellfun(@(x, y) sum(x(1 : y)) / 97656 * 1000, {soundParse.interval}', num2cell([266, 267, 200, 200, 160, 160, 1000, 1000]'), "UniformOutput", false);
-sum (soundParse(2).changeHighIdx(1:249)/soundParse(1).fs*1000)
+% sum (soundParse(2).changeHighIdx(1:249)/soundParse(1).fs*1000)

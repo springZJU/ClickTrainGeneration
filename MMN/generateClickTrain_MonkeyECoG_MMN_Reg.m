@@ -4,11 +4,11 @@ cd(fileparts(mPath));
 %% settings
 
 % sequence setting
-stdNum = 9;
+stdNum = 15;
 ISI = 800; % ms
 BG_Start_Dur = 2000; % ms
-BG_End_Dur = 1000; % ms
-stdDur = 150; % ms
+BG_End_Dur = 7000; % ms
+stdDur = 300; % ms
 devDur = stdDur;
 BG_Epoc_Dur = ISI-stdDur;
 
@@ -31,7 +31,7 @@ repHead = [];
 repTail = [];
 
 %% save folder
-folderName = strcat("MMN_BackGround_", num2str(BG_Start_Dur), "\", num2str(BG_ICI), "ms_ICIs_", strrep(num2str(S1_ICI), ".", "o"), "_", strrep(num2str(S2_ICI), ".", "o"), "_ISI-", num2str(ISI), "_StdDur-", num2str(stdDur), "_BG_Start-", num2str(BG_Start_Dur));
+folderName = strcat("MMN_BackGround_", num2str(BG_Start_Dur), "\", num2str(BG_ICI), "ms_ICIs_", strrep(num2str(S1_ICI), ".", "o"), "_", strrep(num2str(S2_ICI), ".", "o"), "_ISI-", num2str(ISI), "_StdDur-", num2str(stdDur), "_BG_Start-", num2str(BG_Start_Dur), "_BG_End-", num2str(BG_End_Dur));
 rootPath = fullfile('..\..\monkeySounds', strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 
 %% generate single Reg

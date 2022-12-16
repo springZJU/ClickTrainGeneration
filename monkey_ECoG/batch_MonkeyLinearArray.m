@@ -79,7 +79,7 @@ run("generateSuccessiveTone_MonkeyECoG.m");
 toneLength = 30; % ms
 run("generateSuccessiveTone_MonkeyECoG.m");
 
-%% Offset: 3s 2, 4, 8, 16, 32, 64, 128, Offset
+%% Offset: 4s 2, 4, 8, 16, 32, 64, 128, Offset
 Amp = 0.5;
 decodeDuration = 4000; % ms
 decodeICI = [1, 2, 4, 8, 16, 32, 64, 128];
@@ -87,7 +87,7 @@ folderName = "MLA_Offset_Reg";
 
 run("generateClickTrain_MonkeyECoG_Offset_Reg.m");
 
-decodeDuration = 1000; % ms
+decodeDuration = 500; % ms
 run("generateClickTrain_MonkeyECoG_Offset_Reg.m");
 
 %% Offset: 10s 256 512, Offset
@@ -98,6 +98,27 @@ folderName = "MLA_Offset_Reg";
 
 run("generateClickTrain_MonkeyECoG_Offset_Reg.m");
 
+%% Offset: 4ms ICI Reg: 4-512
+Amp = 0.5;
+decodeICI = 4;
+decodeDurations = [4, 8, 16, 32, 64, 128, 256, 512];
+folderName = "MLA_Offset_4_DiffDur_Gen";
+
+for dIndex = 1 : length(decodeDurations)
+    decodeDuration = decodeDurations(dIndex);
+    run("generateClickTrain_MonkeyECoG_Offset_DiffDur.m");
+end
+
+%% Offset: 16ms ICI Reg: 4-512
+Amp = 0.5;
+decodeICI = 16;
+decodeDurations = [16, 32, 64, 128, 256, 512];
+folderName = "MLA_Offset_16_DiffDur_Gen";
+
+for dIndex = 1 : length(decodeDurations)
+    decodeDuration = decodeDurations(dIndex);
+    run("generateClickTrain_MonkeyECoG_Offset_DiffDur.m");
+end
 
 %% Offset: 4ms ICI Reg: 500, 750, 1s, 2s
 Amp = 0.5;
@@ -115,8 +136,8 @@ end
 Amp = 0.5;
 decodeICI = [4, 16];
 sigmas = [250, 50, 10, 2]; % ms
-folderName = "MLA_Offset_4_16_DiffVar";
-decodeDuration = 2000;
+folderName = "MLA_Offset_4_16_DiffVar_500ms";
+decodeDuration = 500;
 
 for dIndex = 1 : length(sigmas)
     sigma = sigmas(dIndex);
