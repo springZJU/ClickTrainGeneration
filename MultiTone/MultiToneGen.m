@@ -2,7 +2,7 @@ function multiTone = MultiToneGen(varargin)
 
 %% To get parameters
 mIp = inputParser;
-mIp.addParameter("xlsxPath", ".\multiToneParameters_For_Generation.xlsx", @(x) isstring(x));
+mIp.addParameter("xlsxPath", fullfile(fileparts(mfilename("fullpath")), ".\multiToneParameters_For_Generation.xlsx"), @(x) isstring(x));
 mIp.addParameter("ID", 1, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive', 'integer'}));
 mIp.parse(varargin{:});
 
@@ -22,7 +22,7 @@ freqPool = round(logspace(log10(freqStart), log10(freqEnd), freqN));
 A = 1/freqN;
 T = 1/fs : 1/fs : singleDur/1000;
 riseFallEnvelope = RiseFallEnve(singleDur, riseFallTime, fs);
-pieces = cellfun(@(x) A*cos(2*pi*2*T), num2cell(freqPool), "uni", false);
+pieces = cellfun(@(x) A*cos(2*pi*x*T), num2cell(freqPool), "uni", false);
 pieces = cellfun(@(x) riseFallEnvelope.*x, pieces, "UniformOutput", false)';
 S1 = sum(cell2mat(pieces(1:2:end)));
 S1Freq = freqPool(1:2:end);

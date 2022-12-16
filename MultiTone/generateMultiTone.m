@@ -1,5 +1,6 @@
+cd(fileparts(mfilename("fullpath")));
 %% generate sound
-ID = 1;
+ID = 2;
 multiTone = MultiToneGen("id", ID);
 
 %% save folder
@@ -17,3 +18,4 @@ audiowrite(soundName, multiTone(sIndex).S2S1, fs);
 end
 
 save(fullfile(rootPath, "multiTone.mat"), "multiTone");
+
