@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'E:\ratNeuroPixel\monkeySounds\2022-12-14_MLA_Offset_8_16_DiffVar_500ms\offset';
+loadPath = 'E:\ratNeuroPixel\ratLASounds\2022-12-18_MLA_Basic_Var\variance diff';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];

@@ -6,13 +6,30 @@
             {"name": "ICIs", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},
             {"name": "Duration", "kind": "required", "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
             {"name": "Amp", "kind": "required", "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
-            {"name": "baseICI", "kind": "ordered", "type": ["numeric", "numel=1"], "purpose": "1*1 double, for Irreg generatio, default: 4"},
-            {"name": "variance", "kind": "ordered", "type": ["numeric", "numel=1"], "purpose": "1*1 double, for Irreg generatio, default: 2"},
+            {"name": "baseICI", "kind": "namevalue", "type": ["numeric", "numel=1"], "purpose": "1*1 double, for Irreg generatio, default: 4"},
+            {"name": "variance", "kind": "namevalue", "type": ["numeric", "numel=1"], "purpose": "1*1 double, for Irreg generatio, default: 2"},
+            {"name": "fs", "kind": "namevalue", "type": ["numeric", "numel=1"], "purpose": "1*1 double, sample rate, default: 97656"},
             {"name": "irregICISampNBase", "kind": "namevalue", "type": ["numeric"]},
             {"name": "repHead", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the head of Irreg waves consistent"},
-            {"name": "repTail", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the tail of Irreg waves consistent"}
+            {"name": "repTail", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the tail of Irreg waves consistent"},
+            {"name": "lastClick", "kind": "namevalue", "type": ["logical", "choices = {0, 1}"], "purpose": "the end of the wave is click or silence"}
         ]
     },
+
+
+    "RegClickGen": {
+        "inputs": [
+            {"name": "ICIs", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},
+            {"name": "Duration", "kind": "required", "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
+            {"name": "Amp", "kind": "required", "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
+            {"name": "fs", "kind": "namevalue", "type": ["numeric", "numel=1"], "purpose": "1*1 double, sample rate, default: 97656"},
+            {"name": "repHead", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the head of Irreg waves consistent"},
+            {"name": "repTail", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the tail of Irreg waves consistent"},
+            {"name": "lastClick", "kind": "namevalue", "type": ["logical", "choices = {0, 1}"], "purpose": "the end of the wave is click or silence"}
+
+        ]
+    },
+
 
     "pickUpHeadTail": {
         "inputs": [
@@ -23,12 +40,32 @@
     },
 
 
-
-    "RegClickGen": {
+    "merge_S1S2": {
         "inputs": [
-            {"name": "ICIs", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},
-            {"name": "Duration", "kind": "required",  "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
-            {"name": "Amp", "kind": "required",  "type": ["numeric", "numel=1"], "purpose": "1*1 double"}
+            {"name": "Seq_Tag", "kind": "namevalue", "type": ["char", "choices={'S1_S2','S2_S1'}"], "purpose": "Sequence Tag"},
+            {"name": "Std_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Std Wave"},
+            {"name": "Dev_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Dev Wave"},
+            {"name": "soundType", "kind": "namevalue", "type": ["char", "choices={'Reg','Irreg'}"], "purpose": "Sound Type"}
+        ]
+    },
+
+    "merge_Oscillation": {
+        "inputs": [
+            {"name": "Seq_Tag", "kind": "namevalue", "type": ["char", "choices={'S1_S2','S2_S1'}"], "purpose": "Sequence Tag"},
+            {"name": "Std_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Std Wave"},
+            {"name": "Dev_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Dev Wave"},
+            {"name": "soundType", "kind": "namevalue", "type": ["char", "choices={'Reg','Irreg'}"], "purpose": "Sound Type"}
+        ]
+    },
+
+    "merge_MMN_Sequence": {
+        "inputs": [
+            {"name": "Seq_Tag", "kind": "namevalue", "type": ["char", "choices={'S1_S2','S2_S1','ManyStd_S2', 'ManyStd_S1'}"], "purpose": "Sequence Tag"},
+            {"name": "BG_Start", "kind": "namevalue", "type": ["struct"], "purpose": "Back ground before MMN sequence"},
+            {"name": "BG_End", "kind": "namevalue", "type": ["struct"], "purpose": "Back ground after MMN sequence"},
+            {"name": "BG_Epoc", "kind": "namevalue", "type": ["struct"], "purpose": "Back ground during MMN sequence"},
+            {"name": "Std_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Std Wave"},
+            {"name": "Dev_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Dev Wave"}
         ]
     }
 }

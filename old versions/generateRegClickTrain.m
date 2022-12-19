@@ -12,11 +12,11 @@ clickDurN = ceil(clickDur / 1000 * fs); % sample points of click
 regICISampN = ceil(ICIs / 1000 * fs); % number of sample points of each ICI
 repeatTime = round(soundLength ./ ICIs); % repeat time of clicks for each click train 
 % number of sample points for each click train
-regClickTrainSampN = cellfun(@(x) ones(x(1), 1) * x(2), array2VectorCell([repeatTime, regICISampN]), 'UniformOutput', false);
+if ~exist("regClickTrainSampN", "var")
+    regClickTrainSampN = cellfun(@(x) ones(x(1), 1) * x(2), array2VectorCell([repeatTime, regICISampN]), 'UniformOutput', false);
+end
 % the index of rise edge for each click onset
 clickOnEdgeIdx =cellfun(@(x) [0; cumsum(x)], regClickTrainSampN, 'UniformOutput', false);
-
-
 
 for n = 1 : length(ICIs)
     wave{n} = zeros(1, ceil(max(clickOnEdgeIdx{n})));
