@@ -21,6 +21,13 @@ repHead = mIp.Results.repHead;
 repTail = mIp.Results.repTail;
 irregICISampNBase = mIp.Results.irregICISampNBase;
 lastClick = logical(mIp.Results.lastClick);
+
+if size(ICIs, 1) ~= numel(ICIs)
+    ICIs = ICIs';
+end
+if size(Duration, 1) ~= numel(Duration)
+    Duration = Duration';
+end
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
