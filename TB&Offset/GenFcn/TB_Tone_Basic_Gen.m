@@ -41,22 +41,18 @@ for index = 1 : length(f2)
     tone2(end) = 0;
 
     % merge tone
-    cutIndex = 1/fs : 1/fs : length([tone1 tone2]) / fs  < cutLength / 1000;
     wave1 = [tone1 tone2];
-    wave1 = wave1(cutIndex);
     wave2 = [tone2 tone1];
-    wave2 = wave2(cutIndex);
-
-    % cut off last signals for merged tone
-    [~, ~, zeroIdx1] = findZeroPoint(wave1); % cross zero point, NP
-    wave1(zeroIdx1(end) : end) = [];
-    [~, ~, zeroIdx2] = findZeroPoint(wave2);
-    wave2(zeroIdx2(end) : end) = [];
+    
+%     % cut off last signals for merged tone
+    [zeroIdx1, ~, ~] = findZeroPoint(wave1); % cross zero point, NP
+    wave1 = wave1(1 : zeroIdx1(find(zeroIdx1 >= cutLength/1000*fs, 1, "first")));
+    [zeroIdx2, ~, ~] = findZeroPoint(wave2);
+    wave2 = wave2(1 : zeroIdx2(find(zeroIdx2 >= cutLength/1000*fs, 1, "first")));
 
     wave1Str = strcat(num2str(fix(f1(index))), "_", num2str(fix(f2(index))) , "_PT.wav");
     wave2Str = strcat(num2str(fix(f2(index))), "_", num2str(fix(f1(index))) , "_PT.wav");
-    %     tone1Str = strcat("single", num2str(fix(f1(index))), "_PT.wav");
-    %     tone2Str = strcat("single", num2str(fix(f2(index))), "_PT.wav");
+
     % save sound
 
     audiowrite(fullfile(rootPath, wave1Str), wave1, fs);

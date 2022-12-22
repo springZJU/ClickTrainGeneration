@@ -1,6 +1,6 @@
 cd(fileparts(mfilename("fullpath")));
 %% generate sound
-ID = 2;
+ID = 3;
 multiTone = MultiToneGen("id", ID);
 
 %% save folder

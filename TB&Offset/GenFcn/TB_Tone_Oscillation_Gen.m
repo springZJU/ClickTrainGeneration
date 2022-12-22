@@ -37,19 +37,18 @@ for index = 1 : length(f2)
     tone1(tR) = tone1(tR) .* sigRise;
     tone2(tF) = tone2(tF) .* sigFall;
 
-    %     [~, ~, zeroIdx1] = findZeroPoint(tone1); % cross zero point, NP
-%     [~, ind] = find(abs(tone1) < 1e-2 & tone1 - [tone1(2 : end) 0] < 0);
-%     tone1 = tone1(1 : ind(end));
+%   [~, ~, zeroIdx1] = findZeroPoint(tone1); % cross zero point, NP
+    [~, ind] = find(abs(tone1) < 1e-2 & tone1 - [tone1(2 : end) 0] < 0);
+    tone1 = tone1(1 : ind(end));
     tone1(end) = 0;
-    %     [~, ~, zeroIdx2] = findZeroPoint(tone2);
-%     [~, ind] = find(abs(tone2) < 1e-2 & tone2 - [tone2(2 : end) 0] < 0);
-%     tone2 = tone2(1 : ind(end));
+%   [~, ~, zeroIdx2] = findZeroPoint(tone2);
+    [~, ind] = find(abs(tone2) < 1e-2 & tone2 - [tone2(2 : end) 0] < 0);
+    tone2 = tone2(1 : ind(end));
     tone2(end) = 0;
 
 
     % merge tone
     wave1 = mergeSuccessiveTone(tone1, tone2, 0, opts, []);
-
     wave1Str = strcat(num2str(fix(f1(index))), "_Successive_PT.wav");
 
     % save sound

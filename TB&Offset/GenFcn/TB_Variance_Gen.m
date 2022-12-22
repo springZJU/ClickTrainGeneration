@@ -1,7 +1,7 @@
 function sounds = TB_Variance_Gen(TBOffsetParams)
 parseStruct(TBOffsetParams);
 for vIndex = 1 : length(sigma)
-    clearvars -except TBOffsetParams vIndex sigma sounds Var_irregICISampNBase
+    clearvars -except TBOffsetParams vIndex sigma sounds TB_Var_irregICISampNBase
 
     parseStruct(TBOffsetParams);
     rootPath = fullfile("..\..\", ParentFolderName, strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
@@ -15,17 +15,17 @@ for vIndex = 1 : length(sigma)
     ICI1 = ICI1(idx); ICI2 = ICI2(idx);
 
     if contains(soundType, ["Reg&Irreg", "Irreg"]) % for irregualr
-        if exist("Var_irregICISampNBase.mat", "file") && ~exist("Var_irregICISampNBase", "var")
-            load("Var_irregICISampNBase.mat");
+        if exist("TB_Var_irregICISampNBase.mat", "file") && ~exist("TB_Var_irregICISampNBase", "var")
+            load("TB_Var_irregICISampNBase.mat");
         end
-        if ~exist("Var_irregICISampNBase", "var")
+        if ~exist("TB_Var_irregICISampNBase", "var")
             [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
-            Var_irregICISampNBase.(strcat("Var", string(Var))) = irregICISampNBase;
-        elseif~isfield(Var_irregICISampNBase, strcat("Var", string(Var)))
+            TB_Var_irregICISampNBase.(strcat("Var", string(Var))) = irregICISampNBase;
+        elseif~isfield(TB_Var_irregICISampNBase, strcat("Var", string(Var)))
             [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
-            Var_irregICISampNBase.(strcat("Var", string(Var))) = irregICISampNBase;
+            TB_Var_irregICISampNBase.(strcat("Var", string(Var))) = irregICISampNBase;
         else
-            irregICISampNBase = Var_irregICISampNBase.(strcat("Var", string(Var)));
+            irregICISampNBase = TB_Var_irregICISampNBase.(strcat("Var", string(Var)));
         end
 
 
@@ -52,7 +52,7 @@ for vIndex = 1 : length(sigma)
     end
 
 end
-save("Var_irregICISampNBase.mat", "Var_irregICISampNBase", "-mat");
+save("TB_Var_irregICISampNBase.mat", "TB_Var_irregICISampNBase", "-mat");
 if  saveMat
     save(fullfile(rootPath, "sounds.mat"), "sounds");
 end

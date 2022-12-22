@@ -15,9 +15,7 @@ TBOffsetParams.Info = mProtocol.Info;
 TBOffsetParams.folderName = mProtocol.folderName;
 TBOffsetParams.ParentFolderName = mProtocol.ParentFolderName;
 TBOffsetParams.Amp = mProtocol.Amp;
-TBOffsetParams.SuccessiveDuration = mProtocol.SuccessiveDuration;
-TBOffsetParams.BFScale = str2double(strsplit(mProtocol.BFScale, ","));
-TBOffsetParams.BFNum = mProtocol.BFNum;
+
 
 % For Temporal Bindings
 TBOffsetParams.S1Dur = str2double(strsplit(mProtocol.S1Dur, ","))';
@@ -35,6 +33,10 @@ TBOffsetParams.repRatio = str2double(strsplit(mProtocol.repRatio, ","));
 TBOffsetParams.cutLength = mProtocol.cutLength; 
 TBOffsetParams.f1 = str2double(strsplit(mProtocol.f1, ","));
 TBOffsetParams.f2 = str2double(strsplit(mProtocol.f2, ","));
+TBOffsetParams.SuccessiveDuration = mProtocol.SuccessiveDuration;
+TBOffsetParams.BFScale = str2double(strsplit(mProtocol.BFScale, ","));
+TBOffsetParams.BFNum = mProtocol.BFNum;
+
 % Others
 TBOffsetParams.soundType = mProtocol.soundType;
 eval(strcat("TBOffsetParams.GenFcn = ", string(mProtocol.GenFcn), ";"));
