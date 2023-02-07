@@ -2,7 +2,7 @@ function RegMMNSequence = MSTI_Reg_Gen(MSTIParams)
 parseStruct(MSTIParams);
 %% validate parameters
 % stdNum and ICI seq(if length of ICI > 1)
-if 
+
 
 % sequence setting
 BG_Epoc_Dur = ISI-stdDur;

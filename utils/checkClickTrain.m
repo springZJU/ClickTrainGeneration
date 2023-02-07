@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'E:\F2RatLinearArray\RatLinearArray\2022-12-20_RLA_Variance';
+loadPath = 'E:\ratNeuroPixel\MonkeyLinearArray\2023-02-07_MLA_Offset_Var_4_16_v1';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];
@@ -19,3 +19,15 @@ if exist(optPath, "file")
     singleDuration = opts.soundRealDuration;
 end
 clearvars -except singleDuration soundParse
+
+keyboard
+%% histogram of ICI
+Fig = figure;
+maximizeFig(Fig);
+soundSel = [15, 16, 13, 14];
+for sIndex = 1 : length(soundSel)
+    subplot(2, 2, sIndex);
+    temp = soundParse(soundSel(sIndex)).interval;
+    histogram(temp, "BinEdges", 0:10:800);
+    title(['variance of ICIs is: ', num2str(std(temp)), '(u/', num2str(roundn(391/std(temp), -2)), ')']);
+end
