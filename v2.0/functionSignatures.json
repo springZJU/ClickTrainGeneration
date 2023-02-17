@@ -45,7 +45,7 @@
             {"name": "Seq_Tag", "kind": "namevalue", "type": ["char", "choices={'S1_S2','S2_S1'}"], "purpose": "Sequence Tag"},
             {"name": "Std_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Std Wave"},
             {"name": "Dev_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Dev Wave"},
-            {"name": "soundType", "kind": "namevalue", "type": ["char", "choices={'Reg','Irreg'}"], "purpose": "Sound Type"}
+            {"name": "soundType", "kind": "namevalue", "type": ["char", "choices={'Reg','Irreg','IFFT'}"], "purpose": "Sound Type"}
         ]
     },
 

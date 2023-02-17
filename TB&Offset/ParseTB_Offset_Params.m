@@ -41,5 +41,6 @@ TBOffsetParams.BFNum = mProtocol.BFNum;
 TBOffsetParams.soundType = mProtocol.soundType;
 eval(strcat("TBOffsetParams.GenFcn = ", string(mProtocol.GenFcn), ";"));
 TBOffsetParams.saveMat = logical(mProtocol.saveMat);
+TBOffsetParams.loadFileName = mProtocol.loadFileName;
 end
 

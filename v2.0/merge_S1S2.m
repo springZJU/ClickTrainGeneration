@@ -3,7 +3,7 @@ mIp = inputParser;
 mIp.addParameter("Seq_Tag", [], @(x) validatestruct(x, any({'S1_S2', 'S2_S1'})));
 mIp.addParameter("Std_Wave", [], @(x) isstruct(x));
 mIp.addParameter("Dev_Wave", [], @(x) isstruct(x));
-mIp.addParameter("soundType", [], @(x) validatestruct(x, any({'Reg', 'Irreg'})));
+mIp.addParameter("soundType", [], @(x) validatestruct(x, any({'Reg', 'Irreg', 'IFFT'})));
 
 mIp.parse(varargin{:});
 

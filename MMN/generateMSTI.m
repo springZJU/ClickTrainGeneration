@@ -1,4 +1,4 @@
 %% Rat Linear Array
 cd(fileparts(mfilename("fullpath")));
-MSTIGen("ID", 3);
+MSTIGen("ID", 4);
 
