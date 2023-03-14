@@ -1,4 +1,4 @@
-function waveOutput = RegClickGen(ICIs, Duration, Amp, varargin)
+function waveOutput = GradClickGen(ICIs, Duration, Amp, varargin)
 % ICI: inter-click interval (ms), n*1 vector
 % Duration: duration of click train (ms), n*1 vector
 % Amp: amplitude of a single click, less or equal than 1
@@ -11,6 +11,9 @@ mIp.addRequired("ICIs", @(x) validateattributes(x, 'numeric', {'vector'}));
 mIp.addRequired("Duration", @(x) validateattributes(x, 'numeric', {'positive'}));
 mIp.addRequired("Amp", @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("fs", 97656, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
+mIp.addParameter("ICIRangeRatio", [0.3, 1.7], @(x) validateattributes(x, 'numeric', { '2d', 'positive'}));
+mIp.addParameter("Type", "ascend", @(x) validatestruct(x, any({'ascend', 'descend', 'ascend_Osci', 'descend_Osci', 'regular'})));
+mIp.addParameter("n_cycles", 1, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("repHead", []);
 mIp.addParameter("repTail", []);
 mIp.addParameter("localChange", []);
@@ -20,6 +23,9 @@ mIp.addParameter("change_TimePoint", []);
 mIp.addParameter("lastClick", false, @(x) any([islogical(x), isnumeric(x)]));
 mIp.parse(ICIs, Duration, Amp, varargin{:});
 
+opts.ICIRangeRatio = mIp.Results.ICIRangeRatio;
+opts.Type = mIp.Results.Type;
+opts.n_cycles = mIp.Results.n_cycles;
 fs = mIp.Results.fs;
 repHead = mIp.Results.repHead;
 repTail = mIp.Results.repTail;
@@ -49,7 +55,7 @@ opts.trainLength = 100; % ms, single train
 opts.soundLength = Duration; % ms, sound length, composed of N single trains
 opts.ICIs = ICIs; % ms
 % singleRegWave = generateRegClickTrain(opts);
-[~, ~, ~, opts.regClickTrainSampN] = generateRegClickTrain(opts);
+[~, ~, ~, opts.regClickTrainSampN] = generateGradClickTrain(opts);
 
 % head rep
 if ~isempty(find(repHead > 0, 1))

@@ -1,4 +1,4 @@
-function TBOffsetParams = ParseTB_Offset_Params(xlsxPath, ID)
+function TBOffsetParams = ParseCT_Perception_Params(xlsxPath, ID)
 narginchk(1, 2);
 if nargin < 2
     ID = 101;
@@ -46,6 +46,10 @@ localChange =  string(strsplit(mProtocol.localChange, ";"));
 for cIndex = 1 : length(localChange) 
     TBOffsetParams.localChange{cIndex, 1} = str2double(strsplit(localChange(cIndex), ","));
 end
+
+% For Gradiant/variance
+TBOffsetParams.n_cycles = mProtocol.n_cycles; 
+TBOffsetParams.ICIRangeRatio = str2double(strsplit(mProtocol.ICIRangeRatio, ","));
 
 % Others
 TBOffsetParams.soundType = mProtocol.soundType;

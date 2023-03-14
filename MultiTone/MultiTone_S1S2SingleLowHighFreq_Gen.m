@@ -1,4 +1,4 @@
-function multiTone = MultiTone_S1S2SingleOddEven_Gen(MultiToneParams)
+function multiTone = MultiTone_S1S2SingleLowHighFreq_Gen(MultiToneParams)
 parseStruct(MultiToneParams);
 
 %% generate sounds

@@ -13,6 +13,7 @@ for rIndex = 1 : length(repNs)
         sounds(rIndex).Info = strcat("No-Rep");
     end
 
+
     %% Generate Click Trains
     ICI1 = repmat(ICIBase, length(ratio), 1);
     ICI2 = ICI1.*repmat(ratio, length(ICIBase), 1);
@@ -57,7 +58,7 @@ for rIndex = 1 : length(repNs)
             sounds(rIndex).Wave(iIndex+3*length(Order_Std)) = merge_S1S2("Seq_Tag", "S2_S1", "Std_Wave", Order_Std(iIndex), "Dev_Wave", Order_Dev(iIndex), "soundType", "Irreg");
         end
     end
-
+    
     temp = sounds(rIndex).Wave;
     mkdir(rootPath);
     for sIndex = 1 : length(temp)

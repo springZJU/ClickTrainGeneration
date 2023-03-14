@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'E:\ratNeuroPixel\ratSounds\2022-12-14_RE_Offset_2_16_DiffVar_500ms\offset';
+loadPath = 'E:\ratNeuroPixel\MonkeyLinearArray\2023-03-10_TB_Basic_4o06_In_4_Insert_Per_1s';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];
@@ -31,3 +31,10 @@ for sIndex = 1 : length(soundSel)
     histogram(temp, "BinEdges", 0:10:800);
     title(['variance of ICIs is: ', num2str(std(temp)), '(u/', num2str(roundn(391/std(temp), -2)), ')']);
 end
+
+%% plot raw wave
+Fig = figure;
+maximizeFig(Fig);
+sIndex = 4;
+plot((1:length(soundParse(sIndex).y1))/soundParse(sIndex).fs, soundParse(sIndex).y1); hold on
+xlim([1.9, 2.1]);

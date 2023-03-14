@@ -1,10 +1,4 @@
-function waveOutput = RegClickGen(ICIs, Duration, Amp, varargin)
-% ICI: inter-click interval (ms), n*1 vector
-% Duration: duration of click train (ms), n*1 vector
-% Amp: amplitude of a single click, less or equal than 1
-% fs: sample rate of the signal, default:97656
-
-% EXAMPLE: regClick = RegClickGen(4, 2000, 1, "fs", 1000);
+function waveOutput = RegClickChangeICIGen(ICIs, Duration, Amp, varargin)
 
 mIp = inputParser;
 mIp.addRequired("ICIs", @(x) validateattributes(x, 'numeric', {'vector'}));
@@ -16,7 +10,6 @@ mIp.addParameter("repTail", []);
 mIp.addParameter("localChange", []);
 mIp.addParameter("changeICI_Tail_N", []);
 mIp.addParameter("changeICI_Head_N", []);
-mIp.addParameter("change_TimePoint", []);
 mIp.addParameter("lastClick", false, @(x) any([islogical(x), isnumeric(x)]));
 mIp.parse(ICIs, Duration, Amp, varargin{:});
 
@@ -26,7 +19,6 @@ repTail = mIp.Results.repTail;
 localChange = mIp.Results.localChange;
 changeICI_Tail_N = mIp.Results.changeICI_Tail_N;
 changeICI_Head_N = mIp.Results.changeICI_Head_N;
-change_TimePoint = mIp.Results.change_TimePoint;
 lastClick = logical(mIp.Results.lastClick);
 
 if size(ICIs, 1) ~= numel(ICIs)
@@ -75,19 +67,7 @@ end
 % changeICI_Tail
 if ~isempty(find(changeICI_Tail_N > 0, 1))
     for rIndex = 1 : length(opts.regClickTrainSampN)
-        opts.regClickTrainSampN{rIndex}((end-length(localChange)+1-changeICI_Tail_N : end-changeICI_Tail_N)) = ceil(ICIs(rIndex)/1000*opts.fs * localChange);
-    end
-end
-
-% change_TimePoint
-if isnumeric(change_TimePoint)
-    for rIndex = 1 : length(opts.regClickTrainSampN)
-        temp = cumsum(opts.regClickTrainSampN{rIndex})/fs;
-        idx = interp1(temp, 1:length(temp), change_TimePoint, "nearest");
-        idx(isnan(idx)) = [];
-        for cIndex = 1 : length(idx)
-            opts.regClickTrainSampN{rIndex}([0 : length(localChange)-1] + idx(cIndex)) = ceil(ICIs(rIndex)/1000*opts.fs * localChange);
-        end
+        opts.regClickTrainSampN{rIndex}((end-length(localChange)+2-changeICI_Tail_N : end-changeICI_Tail_N+1)) = ceil(ICIs(rIndex)/1000*opts.fs * localChange);
     end
 end
 

@@ -46,9 +46,14 @@ for index = 1 : length(f2)
     
 %     % cut off last signals for merged tone
     [zeroIdx1, ~, ~] = findZeroPoint(wave1); % cross zero point, NP
-    wave1 = wave1(1 : zeroIdx1(find(zeroIdx1 >= cutLength/1000*fs, 1, "first")));
     [zeroIdx2, ~, ~] = findZeroPoint(wave2);
-    wave2 = wave2(1 : zeroIdx2(find(zeroIdx2 >= cutLength/1000*fs, 1, "first")));
+    if ~isnan(cutLength)
+        wave1 = wave1(1 : zeroIdx1(find(zeroIdx1 >= cutLength/1000*fs, 1, "first")));
+        wave2 = wave2(1 : zeroIdx2(find(zeroIdx2 >= cutLength/1000*fs, 1, "first")));
+    else
+        wave1 = wave1(1 : zeroIdx1(end));
+        wave2 = wave2(1 : zeroIdx2(end));
+    end
 
     wave1Str = strcat(num2str(fix(f1(index))), "_", num2str(fix(f2(index))) , "_PT.wav");
     wave2Str = strcat(num2str(fix(f2(index))), "_", num2str(fix(f1(index))) , "_PT.wav");
