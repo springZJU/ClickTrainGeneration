@@ -38,3 +38,8 @@ maximizeFig(Fig);
 sIndex = 4;
 plot((1:length(soundParse(sIndex).y1))/soundParse(sIndex).fs, soundParse(sIndex).y1); hold on
 xlim([1.9, 2.1]);
+
+
+%% localChange Time Course
+temp = cumsum(soundParse.interval);
+changeTime = temp(soundParse.interval==397)*1000/soundParse.fs;

@@ -1,0 +1,10 @@
+{
+    "_schemaVersion": "1.0.0",
+
+    "MultiToneGen": {
+        "inputs": [
+            {"name": "ID", "kind": "namevalue",  "type": ["numeric", "numel=1"], "purpose": "choose certain config settings"},
+            {"name": "xlsxPath", "kind": "namevalue", "type": ["char"], "purpose": "path of config file"}
+        ]
+    }
+}
