@@ -1,9 +1,10 @@
 function res = merge_Oscillation(varargin)
 mIp = inputParser;
-mIp.addParameter("Seq_Tag", [], @(x) validatestruct(x, any({'S1_S2', 'S2_S1'})));
+
+mIp.addParameter("Seq_Tag", [], @(x) any(validatestring(x, {'S1_S2', 'S2_S1'})));
 mIp.addParameter("Std_Wave", [], @(x) isstruct(x));
 mIp.addParameter("Dev_Wave", [], @(x) isstruct(x));
-mIp.addParameter("soundType", [], @(x) validatestruct(x, any({'Reg', 'Irreg'})));
+mIp.addParameter("soundType", [], @(x) any(validatestring(x, {'Reg', 'Irreg'})));
 
 mIp.parse(varargin{:});
 

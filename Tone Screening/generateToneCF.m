@@ -1,6 +1,5 @@
 cd(fileparts(mfilename("fullpath")));
 %% generate sound
-multiTone = ToneCFGen("ID", 1);
-
+multiTone = ToneCFGen("ID", 2);
 
 

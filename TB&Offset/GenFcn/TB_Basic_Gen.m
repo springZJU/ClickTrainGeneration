@@ -37,9 +37,9 @@ for rIndex = 1 : length(repNs)
 
 
     if contains(soundType, ["Reg&Irreg", "Irreg"]) % for irregualr
-        if exist("irregICISampNBase.mat", "file")
-            load("irregICISampNBase.mat");
-        end
+%         if exist("irregICISampNBase.mat", "file")
+%             load("irregICISampNBase.mat");
+%         end
         if ~exist("irregICISampNBase", "var")
             [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", 2, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
             save("irregICISampNBase.mat","irregICISampNBase", "-mat");

@@ -61,7 +61,7 @@ end
 % tail rep
 if ~isempty(find(repTail > 0, 1))
     for rIndex = 1 : length(opts.regClickTrainSampN)
-        opts.regClickTrainSampN{rIndex}(1 : length(repTail)) = ceil(ICIs(rIndex)/1000*opts.fs * repTail);
+        opts.regClickTrainSampN{rIndex}(end-length(repTail)+1 : end) = ceil(ICIs(rIndex)/1000*opts.fs * repTail);
     end
 end
 

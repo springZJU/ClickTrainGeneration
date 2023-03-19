@@ -1,6 +1,7 @@
-function res = merge_MMN_Sequence(varargin)
+function res = merge_MSTI_Sequence(varargin)
 mIp = inputParser;
-mIp.addParameter("Seq_Tag", [], @(x) validatestruct(x, any({'S1_S2', 'S2_S1', 'ManyStd_S2', 'ManyStd_S1'})));
+
+mIp.addParameter("Seq_Tag", [], @(x) any(validatestring(x, {'S1_S2', 'S2_S1', 'ManyStd_S2', 'ManyStd_S1'})));
 mIp.addParameter("BG_Start", [], @(x) isstruct(x));
 mIp.addParameter("BG_End", [], @(x) isstruct(x));
 mIp.addParameter("BG_Epoc", [], @(x) isstruct(x));

@@ -81,7 +81,7 @@
         ]
     },
 
-    "merge_MMN_Sequence": {
+    "merge_MSTI_Sequence": {
         "inputs": [
             {"name": "Seq_Tag", "kind": "namevalue", "type": ["char", "choices={'S1_S2','S2_S1','ManyStd_S2', 'ManyStd_S1'}"], "purpose": "Sequence Tag"},
             {"name": "BG_Start", "kind": "namevalue", "type": ["struct"], "purpose": "Back ground before MMN sequence"},
@@ -89,6 +89,15 @@
             {"name": "BG_Epoc", "kind": "namevalue", "type": ["struct"], "purpose": "Back ground during MMN sequence"},
             {"name": "Std_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Std Wave"},
             {"name": "Dev_Wave", "kind": "namevalue", "type": ["struct"], "purpose": "Dev Wave"}
+        ]
+    },
+
+    "merge_External_Sequence": {
+        "inputs": [
+            {"name": "soundSeq", "kind": "required", "type": ["struct"], "purpose": "sounds to be merged"},
+            {"name": "Seq_Tag", "kind": "namevalue", "type": ["char", "choices={'S1_S2','S2_S1','ManyStd_S2', 'ManyStd_S1'}"], "purpose": "Sequence Tag"},
+            {"name": "ISI", "kind": "namevalue", "type": ["numeric"], "purpose": "constant ISI or ISI sequence"},
+            {"name": "fs", "kind": "namevalue", "type": ["numeric", "numel=1"], "purpose": "sample frequency"}
         ]
     }
 }

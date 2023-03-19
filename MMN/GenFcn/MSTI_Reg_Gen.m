@@ -45,10 +45,10 @@ S1_Dev_RegWave = RegClickGen(S1_ICI, devDur, Amp);
 S2_Dev_RegWave = RegClickGen(S2_ICI, devDur, Amp);
 
 %merge
-RegMMNSequence(1) = merge_MMN_Sequence("Seq_Tag", "S1_S2", "BG_Start", BG_Start_RegWave, "BG_End", BG_End_RegWave, "BG_Epoc", BG_Epoc_RegWave, "Std_Wave", S1_Std_RegWave, "Dev_Wave", S2_Dev_RegWave);
-RegMMNSequence(2) = merge_MMN_Sequence("Seq_Tag", "S2_S1", "BG_Start", BG_Start_RegWave, "BG_End", BG_End_RegWave, "BG_Epoc", BG_Epoc_RegWave, "Std_Wave", S2_Std_RegWave, "Dev_Wave", S1_Dev_RegWave);
-RegMMNSequence(3) = merge_MMN_Sequence("Seq_Tag", "ManyStd_S2", "BG_Start", BG_Start_RegWave, "BG_End", BG_End_RegWave, "BG_Epoc", BG_Epoc_RegWave, "Std_Wave", ManyStd_RegWave, "Dev_Wave", S2_Dev_RegWave);
-RegMMNSequence(4) = merge_MMN_Sequence("Seq_Tag", "ManyStd_S1", "BG_Start", BG_Start_RegWave, "BG_End", BG_End_RegWave, "BG_Epoc", BG_Epoc_RegWave, "Std_Wave", ManyStd_RegWave, "Dev_Wave", S1_Dev_RegWave);
+RegMMNSequence(1) = merge_MSTI_Sequence("Seq_Tag", "S1_S2", "BG_Start", BG_Start_RegWave, "BG_End", BG_End_RegWave, "BG_Epoc", BG_Epoc_RegWave, "Std_Wave", S1_Std_RegWave, "Dev_Wave", S2_Dev_RegWave);
+RegMMNSequence(2) = merge_MSTI_Sequence("Seq_Tag", "S2_S1", "BG_Start", BG_Start_RegWave, "BG_End", BG_End_RegWave, "BG_Epoc", BG_Epoc_RegWave, "Std_Wave", S2_Std_RegWave, "Dev_Wave", S1_Dev_RegWave);
+RegMMNSequence(3) = merge_MSTI_Sequence("Seq_Tag", "ManyStd_S2", "BG_Start", BG_Start_RegWave, "BG_End", BG_End_RegWave, "BG_Epoc", BG_Epoc_RegWave, "Std_Wave", ManyStd_RegWave, "Dev_Wave", S2_Dev_RegWave);
+RegMMNSequence(4) = merge_MSTI_Sequence("Seq_Tag", "ManyStd_S1", "BG_Start", BG_Start_RegWave, "BG_End", BG_End_RegWave, "BG_Epoc", BG_Epoc_RegWave, "Std_Wave", ManyStd_RegWave, "Dev_Wave", S1_Dev_RegWave);
 
 %% export
 mkdir(rootPath);
