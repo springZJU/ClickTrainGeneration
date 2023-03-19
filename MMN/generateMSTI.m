@@ -1,4 +1,7 @@
 %% Rat Linear Array
 cd(fileparts(mfilename("fullpath")));
-MSTIGen("ID", 4);
+ID = [101];
+for idx =1 : length(ID)
+    MSTIGen("ID", ID(idx));
+end
 

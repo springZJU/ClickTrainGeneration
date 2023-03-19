@@ -16,6 +16,18 @@ MSTIParams.folderName = mProtocol.folderName;
 MSTIParams.ParentFolderName = mProtocol.ParentFolderName;
 MSTIParams.Amp = mProtocol.Amp;
 
+% For external sound selection
+MSTIParams.SoundPath = mProtocol.SoundPath;
+MSTIParams.SoundSelect = strsplit(mProtocol.SoundSelect, ",");
+MSTIParams.SoundRand = strsplit(mProtocol.SoundRand, ",");
+
+% For MSTI
+MSTIParams.ISI = str2double(strsplit(mProtocol.ISI, ","))';
+MSTIParams.BG_Start_Dur = mProtocol.BG_Start_Dur;
+MSTIParams.BG_End_Dur = mProtocol.BG_End_Dur;
+MSTIParams.stdDur = str2double(strsplit(mProtocol.stdDur, ","))';
+MSTIParams.devDur = str2double(strsplit(mProtocol.devDur, ","))';
+MSTIParams.stdNum = mProtocol.stdNum;
 
 % For Temporal Bindings
 MSTIParams.ISI = str2double(strsplit(mProtocol.ISI, ","))';
