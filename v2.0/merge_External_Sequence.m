@@ -2,7 +2,7 @@ function res = merge_External_Sequence(soundSeq, varargin)
 mIp = inputParser;
 mIp.addRequired("soundSeq", @(x) isstruct(x));
 mIp.addParameter("Seq_Tag", [], @(x) any(validatestring(x, {'S1_S2', 'S2_S1', 'ManyStd_S2', 'ManyStd_S1'})));
-mIp.addParameter("ISI", 1000, @(x) @(x) length(x) == 1 | length(x) == length(soundSeq));
+mIp.addParameter("ISI", 1000, @(x) length(x) == 1 | length(x) == length(soundSeq));
 mIp.addParameter("fs", soundSeq(1).fs, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.parse(soundSeq, varargin{:});
 Seq_Tag = mIp.Results.Seq_Tag;
@@ -27,12 +27,16 @@ if isempty(Seq_Tag)
 end
 
 
-temp = ones(sum(ISI)/1000*fs, 1);
-posIdx = cumsum([1; ISI(1:end-1)/1000*fs]);
+
+temp = zeros(round(sum(ISI)/1000*fs), 1);
+posIdx = round(cumsum([1; ISI(1:end-1)/1000*fs]));
 for p = 1 : length(posIdx)
     temp(posIdx(p) : posIdx(p)+length(soundSeq(p).y1)-1) = soundSeq(p).y1;
 end
-
+if iscolumn(temp)
+    temp = temp';
+end
+res.onsetSeq = [0; cumsum(ISI(1:end-1))];
 res.Tag = Seq_Tag;
 res.Wave = temp;
 res.ISISeq= ISI; 
