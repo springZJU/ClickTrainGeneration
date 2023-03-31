@@ -1,6 +1,6 @@
 %% Rat Linear Array
 cd(fileparts(mfilename("fullpath")));
-ID = [216];
+ID = [227.1, 227.2];
 for idx =1 : length(ID)
     TBOffsetGen("ID", ID(idx));
 end

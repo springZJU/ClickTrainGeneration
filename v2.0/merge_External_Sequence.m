@@ -36,8 +36,8 @@ end
 if iscolumn(temp)
     temp = temp';
 end
-res.onsetSeq = [0; cumsum(ISI(1:end-1))];
 res.Tag = Seq_Tag;
+res.onsetSeq = [0; cumsum(ISI(1:end-1))];
 res.Wave = temp;
 res.ISISeq= ISI; 
 res.fs= fs; 

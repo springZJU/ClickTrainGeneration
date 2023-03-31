@@ -7,10 +7,10 @@ for rIndex = 1 : length(repNs)
     rootPath = fullfile("..\..\", ParentFolderName, strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 
     repN = repRatio(1 : repNs(rIndex));
-    if ~isempty(repN)
-        sounds(rIndex).Info = strcat("repN", string(repNs(rIndex)), "-", strjoin(string(repN), "_"));
+    if repNs(rIndex)>0
+        sounds(rIndex).Info = strcat("InsertN", string(repNs(rIndex)), "-", string(repN(1)));
     else
-        sounds(rIndex).Info = strcat("No-Rep");
+        sounds(rIndex).Info = strcat("No-Inert");
     end
 
 
