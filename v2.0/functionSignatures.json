@@ -34,6 +34,26 @@
 
         ]
     },
+
+    "JitterClickGen": {
+        "inputs": [
+            {"name": "ICIs", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},
+            {"name": "Duration", "kind": "required", "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
+            {"name": "Amp", "kind": "required", "type": ["numeric", "numel=1"], "purpose": "1*1 double"},
+            {"name": "fs", "kind": "namevalue", "type": ["numeric", "numel=1"], "purpose": "1*1 double, sample rate, default: 97656"},
+            {"name": "Jitter", "kind": "namevalue", "type": ["numeric"], "purpose": "Jitter scale [x, y]"},
+            {"name": "JitterMethod", "kind": "namevalue", "type": ["char", "choices={'EvenOdd','rand'}"], "purpose": "Jitter Method"},
+            {"name": "repHead", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the head of Irreg waves consistent"},
+            {"name": "repTail", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, to keep the tail of Irreg waves consistent"},
+            {"name": "localChange", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, ratio of baseICI, change certain ICIs"},
+            {"name": "changeICI_Head_N", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, position of the ICI to be changed from head"},
+            {"name": "changeICI_Tail_N", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, position of the ICI to be changed from tail"},
+            {"name": "change_TimePoint", "kind": "namevalue", "type": ["numeric"], "purpose": ">0, vector, position of the ICI to be changed at certain time"},
+            {"name": "lastClick", "kind": "namevalue", "type": ["logical", "choices = {0, 1}"], "purpose": "the end of the wave is click or silence"}
+
+        ]
+    },
+
     "GradClickGen": {
         "inputs": [
             {"name": "ICIs", "kind": "required", "type": ["numeric"], "purpose": "should be a vector"},

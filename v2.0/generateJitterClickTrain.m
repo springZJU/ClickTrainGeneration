@@ -1,5 +1,5 @@
-%--------------------------to generate single regular click train------------
-function [wave, duration, clickOnEdgeIdx, regClickTrainSampN] = generateRegClickTrain(opts)
+%--------------------------to generate single jitter click train------------
+function [wave, duration, clickOnEdgeIdx] = generateJitterClickTrain(opts)
 parseStruct(opts);
 
 if size(ICIs, 1) == 1
@@ -7,15 +7,8 @@ if size(ICIs, 1) == 1
 end
 
 clickDurN = ceil(clickDur / 1000 * fs); % sample points of click
-regICISampN = ceil(ICIs / 1000 * fs); % number of sample points of each ICI
-repeatTime = round(soundLength ./ ICIs); % repeat time of clicks for each click train 
 % number of sample points for each click train
-if ~exist("regClickTrainSampN", "var")
-    regClickTrainSampN = cellfun(@(x) ones(x(1), 1) * x(2), num2cell([repeatTime, regICISampN], 2), 'UniformOutput', false);
-end
-% the index of rise edge for each click onset
 clickOnEdgeIdx =cellfun(@(x) [0; cumsum(x)], regClickTrainSampN, 'UniformOutput', false);
-
 for n = 1 : length(ICIs)
     wave{n} = zeros(1, ceil(max(clickOnEdgeIdx{n})));
     clickIdx = cellfun(@(x) x+1:1:x+clickDurN, num2cell(clickOnEdgeIdx{n}),'UniformOutput',false);

@@ -20,7 +20,7 @@ changeICIStr = string(cellfun(@(x) ['_ChangeICI', num2str(x(1)), '_Interval', nu
 for lIndex = 1 : length(localChange)
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
         % generate Reg S1-S2
-        sounds((length(ICIs)-1)*lIndex+1 : length(ICIs)*lIndex) = RegClickGen(ICIs, Durs, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", 1, "localChange", localChange{lIndex, 1}, "change_TimePoint", change_TimePoint);
+        sounds((length(ICIs)-1)*(lIndex-1)+1 : length(ICIs)*lIndex) = RegClickGen(ICIs, Durs, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", 1, "localChange", localChange{lIndex, 1}, "change_TimePoint", change_TimePoint);
     end
 end
 

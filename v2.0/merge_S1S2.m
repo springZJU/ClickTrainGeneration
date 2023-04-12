@@ -1,6 +1,6 @@
 function res = merge_S1S2(varargin)
 mIp = inputParser;
-mIp.addParameter("Seq_Tag", [], @(x) any(validatestring(x, {'S1_S2', 'S2_S1'})));
+mIp.addParameter("Seq_Tag", []);
 mIp.addParameter("Std_Wave", [], @(x) isstruct(x));
 mIp.addParameter("Dev_Wave", [], @(x) isstruct(x));
 mIp.addParameter("soundType", [], @(x) any(validatestring(x, {'Reg', 'Irreg', 'IFFT'})));
