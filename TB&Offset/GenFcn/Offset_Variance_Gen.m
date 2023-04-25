@@ -28,7 +28,7 @@ for vIndex = 1 : length(ICIs)
             irregICISampNBase = Offset_Var_irregICISampNBase.(strcat("Var", string(Var)));
         end
     end
-    sounds(vIndex) = IrregClickGen(ICIs(vIndex), S1Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", 1);
+    sounds(vIndex) = IrregClickGen(ICIs(vIndex), S1Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick);
 end
 %% export sounds
 mkdir(rootPath)

@@ -26,7 +26,7 @@ if isempty(soundType)
 end
 
 res.Tag = strjoin([soundType ,Seq_Tag], "_");
-res.Name = strcat("TB_", soundType, "_", strrep(num2str(Std_Wave(1).ICIs), ".", "o"), "-", strrep(num2str(Dev_Wave.ICIs), ".", "o"));
+res.Name = strcat("TB_", soundType, "_Dur", num2str(Std_Wave(1).Duration), "_", strrep(num2str(Std_Wave(1).ICIs), ".", "o"), "-", strrep(num2str(Dev_Wave.ICIs), ".", "o"));
 res.Wave = [Std_Wave.Wave; Dev_Wave.Wave];
 res.ICISeq = [Std_Wave.ICIs; Dev_Wave.ICIs];
 res.Std_Dev_Onset = [0; Std_Wave.Duration];

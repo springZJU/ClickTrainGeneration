@@ -1,15 +1,15 @@
 clear; clc
 
-loadPath = 'D:\ratClickTrain\monkeySounds\2023-04-01_RLA_BaseICI';
+loadPath = 'E:\ratNeuroPixel\monkeySounds\2022-12-08_MMN_BackGround_2000\5ms_ICIs_4o5_4_ISI-650_StdDur-150_BG_Start-2000';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];
 
 [y1, fs] = cellfun(@(x) audioread(fullfile(loadPath, x)), {files.name}', "UniformOutput", false);
-[yLength, sLength, cutLength, interval, changeHighIdx, toHighIdx, T, onIdx] = cellfun(@(x, y) parseClickTrain(x, y, tCutoff), y1, fs, "UniformOutput", false);
+[yLength, sLength, cutLength, interval, changeHighIdx, changeHighTime, toHighIdx, T, onIdx] = cellfun(@(x, y) parseClickTrain(x, y, tCutoff), y1, fs, "UniformOutput", false);
 
-Fields = {'name', 'sLength', 'cutLength', 'interval', 'y1', 'fs', 'changeHighIdx', 'toHighIdx', 'T', 'onIdx'}';
-Values = [{files.name}', sLength, cutLength, interval, y1, fs, changeHighIdx, toHighIdx, T, onIdx, num2cell(ones(length(T), 1) * tCutoff)];
+Fields = {'name', 'sLength', 'cutLength', 'interval', 'y1', 'fs', 'changeHighIdx', 'changeHighTime', 'toHighIdx', 'T', 'onIdx'}';
+Values = [{files.name}', sLength, cutLength, interval, y1, fs, changeHighIdx, changeHighTime, toHighIdx, T, onIdx, num2cell(ones(length(T), 1) * tCutoff)];
 
 soundParse = easyStruct(Fields, Values);
 

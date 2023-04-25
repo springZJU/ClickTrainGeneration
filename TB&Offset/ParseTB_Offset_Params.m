@@ -42,6 +42,7 @@ TBOffsetParams.BFNum = mProtocol.BFNum;
 % For Offset
 TBOffsetParams.changeICI_Tail_N = str2double(strsplit(mProtocol.changeICI_Tail_N, ","));
 TBOffsetParams.changeICI_Head_N = str2double(strsplit(mProtocol.changeICI_Head_N, ","));
+TBOffsetParams.lastClick = mProtocol.lastClick;
 localChange =  string(strsplit(mProtocol.localChange, ";"));
 for cIndex = 1 : length(localChange) 
     TBOffsetParams.localChange{cIndex, 1} = str2double(strsplit(localChange(cIndex), ","));
