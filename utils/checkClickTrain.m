@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'E:\ratNeuroPixel\monkeySounds\2022-12-08_MMN_BackGround_2000\5ms_ICIs_4o5_4_ISI-650_StdDur-150_BG_Start-2000';
+loadPath = 'E:\ratNeuroPixel\RatLinearArray\2023-04-25_RNP_Perception_Jitter_Dur300';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];

@@ -1,7 +1,7 @@
-function sounds = TB_Local_ICIChange_Jitter_Gen(TBOffsetParams)
+function sounds = TB_Jitter_Gen(TBOffsetParams)
 parseStruct(TBOffsetParams);
 for jIndex = 1 : length(Jitter)
-    clearvars -except TBOffsetParams rIndex  sounds  Jitter jIndex
+    clearvars -except TBOffsetParams rIndex repNs sounds irregICISampNBase Jitter jIndex
 
     parseStruct(TBOffsetParams);
     rootPath = fullfile("..\..\", ParentFolderName, strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));

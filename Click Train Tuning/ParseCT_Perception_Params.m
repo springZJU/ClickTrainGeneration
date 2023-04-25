@@ -46,6 +46,20 @@ localChange =  string(strsplit(mProtocol.localChange, ";"));
 for cIndex = 1 : length(localChange) 
     TBOffsetParams.localChange{cIndex, 1} = str2double(strsplit(localChange(cIndex), ","));
 end
+TBOffsetParams.lastClick = mProtocol.lastClick;
+
+% For Jitter
+Jitter =  string(strsplit(mProtocol.Jitter, ";"));
+for cIndex = 1 : length(Jitter) 
+    TBOffsetParams.Jitter{cIndex, 1} = str2double(strsplit(Jitter(cIndex), ","));
+end
+TBOffsetParams.JitterMethod = mProtocol.JitterMethod;
+
+repRatioHead =  string(strsplit(mProtocol.repRatioHead, ";"));
+for cIndex = 1 : length(repRatioHead) 
+    TBOffsetParams.repRatioHead{cIndex, 1} = str2double(strsplit(repRatioHead(cIndex), ","));
+end
+TBOffsetParams.repRatioTail = str2double(strsplit(mProtocol.repRatioTail, ","));
 
 % For Gradiant/variance
 TBOffsetParams.n_cycles = mProtocol.n_cycles; 

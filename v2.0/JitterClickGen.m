@@ -11,7 +11,7 @@ mIp.addRequired("ICIs", @(x) validateattributes(x, 'numeric', {'vector'}));
 mIp.addRequired("Duration", @(x) validateattributes(x, 'numeric', {'positive'}));
 mIp.addRequired("Amp", @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("fs", 97656, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
-mIp.addParameter("Jitter", [], @(x) validateattributes(x, 'numeric', {'2d', 'increasing'}));
+mIp.addParameter("Jitter", [], @(x) validateattributes(x, 'numeric', {'2d'}));
 mIp.addParameter("JitterMethod", "EvenOdd", @(x) any(validatestring(x, {'EvenOdd', 'rand'})));
 mIp.addParameter("repHead", []);
 mIp.addParameter("repTail", []);
