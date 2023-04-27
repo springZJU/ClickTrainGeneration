@@ -11,7 +11,8 @@ end
 rootPath = fullfile("..\..\", ParentFolderName, strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 repN = repRatio(1 : repNs);
 ICIs = reshape(repmat(ICIBase', length(S1Dur), 1), [], 1);
-Durs = repmat(S1Dur, length(ICIBase), 1);
+% Durs = repmat(S1Dur, length(ICIBase), 1);
+Durs = S1Dur';
 DurAll = repmat(S1Dur, length(ICIBase)*length(localChange), 1);
 ICIAll = repmat(ICIs, length(localChange), 1);
 changeICI = cell2mat(cellfun(@(x) ICIs*x, localChange, "UniformOutput", false));

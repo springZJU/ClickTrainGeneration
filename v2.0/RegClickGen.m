@@ -29,10 +29,10 @@ changeICI_Head_N = mIp.Results.changeICI_Head_N;
 change_TimePoint = mIp.Results.change_TimePoint;
 lastClick = logical(mIp.Results.lastClick);
 
-if size(ICIs, 1) ~= numel(ICIs)
+if ~iscolumn(ICIs)
     ICIs = ICIs';
 end
-if size(Duration, 1) ~= numel(Duration)
+if ~iscolumn(Duration)
     Duration = Duration';
 end
 
@@ -97,7 +97,7 @@ if lastClick
     singleRegWave = cellfun(@(x) [x; click'], singleRegWave, "UniformOutput", false);
 end
 
-
+ICIs = repmat(ICIs, length(Duration), 1);
 c_ICIs = num2cell(ICIs);
 c_Wave = singleRegWave;
 c_OnsetIdx = cellfun(@(x) [1; find(diff(x) > 0) + 1], singleRegWave, "uni", false);

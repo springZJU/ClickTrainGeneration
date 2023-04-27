@@ -10,7 +10,7 @@ end
 %% Generate Click Trains
 rootPath = fullfile("..\..\", ParentFolderName, strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 repN = repRatio(1 : repNs);
-ICIs = reshape(repmat(ICIBase', length(S1Dur), 1), [], 1);
+ICIs = ICIBase';
 Durs = repmat(S1Dur, length(ICIBase), 1);
 
 if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
@@ -21,7 +21,7 @@ end
 %% export sounds
 mkdir(rootPath)
 for sIndex = 1 : length(sounds)
-    soundName = strcat(rootPath, "\", "Reg_Dur-", num2str(Durs(sIndex)), "_ICI", num2str(ICIs(sIndex)), ".wav");
+    soundName = strcat(rootPath, "\", "Reg_Dur-", num2str(round(Durs(sIndex))), "_ICI", num2str(sounds(sIndex).ICIs), ".wav");
     audiowrite(soundName, sounds(sIndex).Wave, fs);
 end
 if saveMat

@@ -17,7 +17,7 @@ end
 % the index of rise edge for each click onset
 clickOnEdgeIdx =cellfun(@(x) [0; cumsum(x)], regClickTrainSampN, 'UniformOutput', false);
 
-for n = 1 : length(ICIs)
+for n = 1 : length(regICISampN)
     wave{n} = zeros(1, ceil(max(clickOnEdgeIdx{n})));
     clickIdx = cellfun(@(x) x+1:1:x+clickDurN, num2cell(clickOnEdgeIdx{n}),'UniformOutput',false);
     for clickN = 1 : length(clickIdx) - 1

@@ -1,4 +1,4 @@
-function ToneCF = ToneCF_DiffAtt_Gen(ToneCFParams)
+function ToneCF = Tone_LocalChange_Gen(ToneCFParams)
 
 parseStruct(ToneCFParams);
 
@@ -13,6 +13,7 @@ riseFallEnvelope = RiseFallEnve(singleDur, riseFallTime, fs);
 ToneCF = cellfun(@(x) Amp*cos(2*pi*x*T), num2cell(freqPool)', "uni", false);
 ToneCF = cellfun(@(x) riseFallEnvelope.*x, ToneCF, "UniformOutput", false)';
 ToneCF = cellfun(@(x, y) x* att2AmpRatio(y), repmat(ToneCF, length(Attenuation), 1), num2cell(reshape(repmat(Attenuation, length(ToneCF), 1), [], 1)), "uni", false);
+ToneCF = cellfun(@(x) ToneLocalChange(x, fs, LocalPos, LocalDur, LocalRatio), ToneCF, "UniformOutput", false);
 NameStr = cellfun(@(x, y) strcat("Tone", num2str(x), "Hz_Att",num2str(y), "dB.wav"), num2cell(repmat(freqPool, length(Attenuation), 1)),  num2cell(reshape(repmat(Attenuation, length(freqPool), 1), [], 1)), "UniformOutput", false);
 sounds = cell2struct([ToneCF, NameStr], ["Wave", "Name"], 2);
 %% export
