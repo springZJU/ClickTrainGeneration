@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'E:\ratNeuroPixel\MonkeyLinearArray\2023-03-10_TB_Basic_4o06_In_4_Insert_Per_1s';
+loadPath = 'I:\Programe\EEGOffset\App\sounds\4';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];
@@ -24,11 +24,11 @@ keyboard
 %% histogram of ICI
 Fig = figure;
 maximizeFig(Fig);
-soundSel = [15, 16, 13, 14];
+soundSel = [4];
 for sIndex = 1 : length(soundSel)
     subplot(2, 2, sIndex);
     temp = soundParse(soundSel(sIndex)).interval;
-    histogram(temp, "BinEdges", 0:10:800);
+    Fig(sIndex) = histogram(temp, "BinEdges", 0:10:800);
     title(['variance of ICIs is: ', num2str(std(temp)), '(u/', num2str(roundn(391/std(temp), -2)), ')']);
 end
 
