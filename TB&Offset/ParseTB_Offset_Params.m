@@ -36,6 +36,7 @@ TBOffsetParams.cutLength = mProtocol.cutLength;
 TBOffsetParams.f1 = str2double(strsplit(mProtocol.f1, ","));
 TBOffsetParams.f2 = str2double(strsplit(mProtocol.f2, ","));
 TBOffsetParams.SuccessiveDuration = mProtocol.SuccessiveDuration;
+TBOffsetParams.order = mProtocol.order;
 TBOffsetParams.BFScale = str2double(strsplit(mProtocol.BFScale, ","));
 TBOffsetParams.BFNum = mProtocol.BFNum;
 

@@ -13,7 +13,7 @@ for jIndex = 1 : length(Jitter)
     ICI2 = ICI1.*repmat(ratio, length(ICIBase), 1);
     [~, idx] = sortrows([ICI1, ICI2], [1, 2]);
     ICI1 = ICI1(idx); ICI2 = ICI2(idx);
-    if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
+    if contains(soundType, ["Reg&Irreg", "Irreg"]) % for regualr
         % generate Jitter S1-S2
         Order_Std =JitterClickGen(ICI1, S1Dur, Amp,  "repTail", repTail*repRatioTail, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd");
         Order_Dev =JitterClickGen(ICI2, S2Dur, Amp, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd");

@@ -26,7 +26,7 @@ for dIndex = 1 : length(S1Dur)
     %     sounds(dIndex).Info = strcat("Oscillation_Dur", string(S1Dur(dIndex)), "ms");
 
     %% Generate Click Trains
-    ICI1 = repmat(ICIBase, SuccessiveDuration/2/Dur, 1);
+    ICI1 = repmat(ICIBase, round(SuccessiveDuration/2/Dur), 1);
     ICI2 = ICI1*ratio;
 
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr

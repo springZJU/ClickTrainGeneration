@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'E:\ratNeuroPixel\RatLinearArray\2023-04-27_MLA_Offset_Int_4_8_last8\';
+loadPath = 'E:\ratNeuroPixel\RatLinearArray\2023-05-25_RNP_LocalChange_2.2ms_2s-1s_N124';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];
