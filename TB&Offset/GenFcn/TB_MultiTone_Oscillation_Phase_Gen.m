@@ -12,7 +12,7 @@ for index = 1 : length(S1Dur)
     orders = num2cell(1:order);
     wave1 = cellfun(@(x) joinTone(f1*2^(x-1), f2*2^(x-1), toneLength, SuccessiveDuration, fs), orders, "UniformOutput", false);
     wave1 = mean(cell2mat(wave1'), 1);
-    wave1 = Amp/order * wave1;
+    wave1 = Amp * wave1;
 
     t = 1/fs : 1 /fs : length(wave1)/fs;
     % calculate rise fall index

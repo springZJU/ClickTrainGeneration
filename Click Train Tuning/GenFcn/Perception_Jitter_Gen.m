@@ -8,7 +8,7 @@ for jIndex = 1 : length(Jitter)
     jitterTemp = Jitter{jIndex};
 
     %% Generate Click Trains
-    if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
+    if contains(soundType, ["Reg&Irreg", "Irreg"]) % for regualr
     for bIndex = 1 :length(ICIBase)
         sounds((jIndex-1)*length(ICIBase) + bIndex).Info = strcat("Jitter", string(Jitter{jIndex}(1)), "-", string(Jitter{jIndex}(2)), "_ICI_", num2str(ICIBase(bIndex)), "ms");
         sounds((jIndex-1)*length(ICIBase) + bIndex).Wave =JitterClickGen(ICIBase(bIndex), S1Dur, Amp,  "repTail", repTail*repRatioTail, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd", "lastClick", lastClick);
