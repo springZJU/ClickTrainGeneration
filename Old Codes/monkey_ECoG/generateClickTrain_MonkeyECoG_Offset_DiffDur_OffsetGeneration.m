@@ -14,7 +14,7 @@ mkdir(opts.rootPath);
 
 %% generate single click
 opts.Amp = Amp;
-opts.clickDur = 0.2 ; % ms
+opts.clickDur = evalin("base", "clickDur") ; % ms
 opts.riseFallTime = 0; % ms
 click = generateClick(opts);
 

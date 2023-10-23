@@ -14,6 +14,13 @@ TBOffsetParams.fs = mProtocol.fs;
 TBOffsetParams.Info = mProtocol.Info;
 TBOffsetParams.folderName = mProtocol.folderName;
 TBOffsetParams.ParentFolderName = mProtocol.ParentFolderName;
+if ~isnan(str2double(mProtocol.clickDur))
+    TBOffsetParams.clickDur = str2double(mProtocol.clickDur);
+else
+    eval(strcat("temp = ", mProtocol.clickDur));
+    TBOffsetParams.clickDur = temp;
+end
+
 TBOffsetParams.Amp = mProtocol.Amp;
 
 

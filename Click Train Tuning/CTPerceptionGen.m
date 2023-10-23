@@ -13,6 +13,7 @@ ID = mIp.Results.ID;
 
 CTPerceptionParams = ParseCT_Perception_Params(xlsxPath, ID);
 assignin("caller", "fs", CTPerceptionParams.fs);
+assignin("base", "clickDur", TBOffsetParams.clickDur);
 
 %% generate sounds
 CTPerceptionParams.GenFcn(CTPerceptionParams);

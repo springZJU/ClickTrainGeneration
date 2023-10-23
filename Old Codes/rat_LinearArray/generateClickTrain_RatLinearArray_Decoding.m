@@ -15,7 +15,7 @@ decodeDuration = 200; % ms
 
 %% generate single click
 opts.Amp = 1;
-opts.clickDur = 0.2 ; % ms
+opts.clickDur = evalin("base", "clickDur") ; % ms
 opts.riseFallTime = 0; % ms
 click = generateClick(opts);
 

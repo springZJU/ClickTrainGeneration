@@ -28,7 +28,7 @@ opts.Amp = 0.1;
 opts.AmpS1 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s1ICI), "UniformOutput", false);
 opts.AmpS2 = cellfun(@(x, y) normalizeClickTrainSPL(4, x, opts.Amp, 2), num2cell(s2ICI), "UniformOutput", false);
 opts.riseFallTime = 0; % ms
-opts.clickDur = 0.2 ; % ms
+opts.clickDur = evalin("base", "clickDur") ; % ms
 click = generateClick(opts);
 
 %% for click train long term
