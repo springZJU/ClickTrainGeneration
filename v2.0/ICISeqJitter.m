@@ -19,6 +19,11 @@ if ~isempty(Jitter)
             ratio = [ratioOdd; ratioEven];
             ratio = ratio(randperm(length(ratio)));
             ICIJitter = ICISeq .* ratio;
+        case "sumConstant"
+            ICIJitter = ICISeq;
+            ICIJitter(1:2:end) = ICIJitter(1:2:end) .* [ratioOdd; ones(length(ICIJitter(1:2:end))- length(ratioOdd), 1)];
+            ICIJitter(2:2:end) = ICIJitter(2:2:end) .* [ratioEven; ones(length(ICIJitter(2:2:end))- length(ratioOdd), 1)];
+
     end
     ICIJitter = ceil(ICIJitter);
 else

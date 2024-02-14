@@ -39,7 +39,11 @@ end
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
-opts.clickDur = evalin("base", "clickDur") ; % msse", "clickDur") ; % ms
+try
+    opts.clickDur = evalin("caller", "clickDur") ; % ms
+catch
+    opts.clickDur = 0.2;
+end
 opts.riseFallTime = 0; % ms
 click = generateClick(opts);
 

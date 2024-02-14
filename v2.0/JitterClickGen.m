@@ -12,7 +12,7 @@ mIp.addRequired("Duration", @(x) validateattributes(x, 'numeric', {'positive'}))
 mIp.addRequired("Amp", @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("fs", 97656, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("Jitter", [], @(x) validateattributes(x, 'numeric', {'2d'}));
-mIp.addParameter("JitterMethod", "EvenOdd", @(x) any(validatestring(x, {'EvenOdd', 'rand'})));
+mIp.addParameter("JitterMethod", "EvenOdd", @(x) any(validatestring(x, {'EvenOdd', 'rand', 'sumConstant'})));
 mIp.addParameter("repHead", []);
 mIp.addParameter("repTail", []);
 mIp.addParameter("localChange", []);
@@ -43,7 +43,8 @@ end
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
-opts.clickDur = evalin("base", "clickDur") ; % ms
+% opts.clickDur = evalin("base", "clickDur") ; % ms
+opts.clickDur = 0.2 ; % ms
 opts.riseFallTime = 0; % ms
 click = generateClick(opts);
 
