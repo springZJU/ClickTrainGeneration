@@ -33,6 +33,6 @@ for n = 1 : length(ICIs)
         wave{n}(clickIdx{clickN}) = click;
     end
     wave{n} = wave{n}';
-    duration(n, 1) = find(wave{n} == Amp, 1, 'last' ) / fs * 1000;
+    duration(n, 1) = find(wave{n} ~=0, 1, 'last' ) / fs * 1000;
 end
 wave = wave';

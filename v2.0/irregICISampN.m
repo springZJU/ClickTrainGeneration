@@ -19,7 +19,6 @@ baseICIN = baseICI / 1000 * fs;
 while std(cell2mat(ICINIrreg(1 : rollN))) / baseICIN < 0.9 / sigmaPara || std(cell2mat(ICINIrreg(1 : rollN))) / baseICIN > 1.1 / sigmaPara
     for jj = 1 : rollN
         disp(['generate round ' num2str(jj) ' , please waiting']);
-        seqIdx = ceil((0 : repeatTime) * baseICI / 1000 * fs);
         buffer = [0 0 0 0];
         while any([buffer < baseICIN * intervalMin   buffer > baseICIN * intervalMax  std(buffer)< 0.9*(baseICIN/sigmaPara)  std(buffer)> 1.1*(baseICIN / sigmaPara) ])
             buffer = floor(normrnd(baseICIN , baseICIN / sigmaPara , 1, repeatTime));

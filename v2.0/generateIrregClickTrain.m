@@ -23,7 +23,7 @@ for i = 1 : length(ICIs)
         wave{i, 1}(clickIdx{j}) = click;
     end
     wave{i, 1} = wave{i, 1}';
-    duration(i, 1) = find(wave{i, 1} == Amp, 1, 'last' ) / fs * 1000;
+    duration(i, 1) = find(wave{i, 1} ~= 0, 1, 'last' ) / fs * 1000;
 end
 
 end

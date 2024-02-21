@@ -11,6 +11,7 @@ mIp.addRequired("ICIs", @(x) validateattributes(x, 'numeric', {'vector'}));
 mIp.addRequired("Duration", @(x) validateattributes(x, 'numeric', {'positive'}));
 mIp.addRequired("Amp", @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("fs", 97656, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
+mIp.addParameter("clickType", "pulse");
 mIp.addParameter("repHead", []);
 mIp.addParameter("repTail", []);
 mIp.addParameter("localChange", []);
@@ -21,6 +22,7 @@ mIp.addParameter("lastClick", false, @(x) any([islogical(x), isnumeric(x)]));
 mIp.parse(ICIs, Duration, Amp, varargin{:});
 
 fs = mIp.Results.fs;
+clickType = mIp.Results.clickType;
 repHead = mIp.Results.repHead;
 repTail = mIp.Results.repTail;
 localChange = mIp.Results.localChange;
@@ -39,14 +41,21 @@ end
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
-try
-    opts.clickDur = evalin("caller", "clickDur") ; % ms
-catch
-    opts.clickDur = 0.2;
-end
-opts.riseFallTime = 0; % ms
-click = generateClick(opts);
 
+clickTrainParams  = evalin("base", "clickTrainParams");
+opts.clickDur     = clickTrainParams.clickDur;
+try clickType = clickTrainParams.clickType; catch; clickType = "pulse"; end
+if strcmp(clickType, "toneBurst")
+    opts.toneRiseFall =  clickTrainParams.toneRiseFall;
+    opts.BFScale =  clickTrainParams.BFScale;
+    opts.BFNum =  clickTrainParams.BFNum;
+    click = generateToneBurst(opts);
+elseif  strcmp(clickType, "pulse")
+    opts.riseFallTime = 0; % ms
+    click = generateClick(opts);
+else
+    error("illegal click type!!!");
+end
 %% for single click train
 opts.click = click;
 opts.trainLength = 100; % ms, single train
