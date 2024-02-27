@@ -17,15 +17,15 @@ for dIndex = 1 : length(S1Dur)
     ICI1 = ICI1(idx); ICI2 = ICI2(idx);
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
         % generate Reg S1-S2
-        Order_Std =RegClickGen(ICI1, S1Dur(dIndex), Amp, "fs", fs);
-        Order_Dev =RegClickGen(ICI2, S2Dur, Amp, "fs", fs);
+        Order_Std =RegClickGen(ICI1, S1Dur(dIndex), Amp, "fs", fs, "clickType", clickType);
+        Order_Dev =RegClickGen(ICI2, S2Dur, Amp, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for iIndex = 1 : length(Order_Std)
             sounds(dIndex).Wave(iIndex) = merge_S1S2("Seq_Tag", "S1_S2", "Std_Wave", Order_Std(iIndex), "Dev_Wave", Order_Dev(iIndex), "soundType", "Reg");
         end
 
         % generate Reg S2-S1
-        Order_Std =RegClickGen(ICI2, S1Dur(dIndex), Amp, "fs", fs);
-        Order_Dev =RegClickGen(ICI1, S2Dur, Amp, "fs", fs);
+        Order_Std =RegClickGen(ICI2, S1Dur(dIndex), Amp, "fs", fs, "clickType", clickType);
+        Order_Dev =RegClickGen(ICI1, S2Dur, Amp, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for iIndex = 1 : length(Order_Dev)
             sounds(dIndex).Wave(iIndex+length(Order_Std)) = merge_S1S2("Seq_Tag", "S2_S1", "Std_Wave", Order_Std(iIndex), "Dev_Wave", Order_Dev(iIndex), "soundType", "Reg");
         end

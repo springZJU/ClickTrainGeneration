@@ -44,9 +44,20 @@ end
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
-opts.clickDur = evalin("base", "clickDur") ; % ms
-opts.riseFallTime = 0; % ms
-click = generateClick(opts);
+clickTrainParams  = evalin("base", "clickTrainParams");
+opts.clickDur     = clickTrainParams.clickDur;
+try clickType = clickTrainParams.clickType; catch; clickType = "pulse"; end
+if strcmp(clickType, "toneBurst")
+    opts.toneRiseFall =  clickTrainParams.toneRiseFall;
+    opts.BFScale =  clickTrainParams.BFScale;
+    opts.BFNum =  clickTrainParams.BFNum;
+    click = generateToneBurst(opts);
+elseif  strcmp(clickType, "pulse")
+    opts.riseFallTime = 0; % ms
+    click = generateClick(opts);
+else
+    error("illegal click type!!!");
+end
 
 %% for single click train
 opts.click = click;

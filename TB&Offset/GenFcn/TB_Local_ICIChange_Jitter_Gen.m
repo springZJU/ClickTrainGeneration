@@ -15,8 +15,8 @@ for jIndex = 1 : length(Jitter)
     ICI1 = ICI1(idx); ICI2 = ICI2(idx);
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
         % generate Jitter S1-S2
-        Order_Std =JitterClickGen(ICI1, S1Dur, Amp,  "repTail", repTail*repRatioTail, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd");
-        Order_Dev =JitterClickGen(ICI2, S2Dur, Amp, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd");
+        Order_Std =JitterClickGen(ICI1, S1Dur, Amp,  "repTail", repTail*repRatioTail, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd", "clickType", clickType);
+        Order_Dev =JitterClickGen(ICI2, S2Dur, Amp, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd", "lastClick", lastClick , "clickType", clickType);
         for rIndex = 1 : length(repRatioHead)
             Order_Dev =ClickTrainRep(Order_Dev, Amp, "repHead", repHead*repRatioHead{rIndex}, "repTail", repTail*repRatioHead{rIndex}, "fs", fs);
             for iIndex = 1 : length(Order_Std)
@@ -24,8 +24,8 @@ for jIndex = 1 : length(Jitter)
             end
         end
         % generate Jitter S2-S1
-        Order_Std =JitterClickGen(ICI2, S1Dur, Amp,  "repTail", repTail*repRatioTail, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd");
-        Order_Dev =JitterClickGen(ICI1, S2Dur, Amp, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd");
+        Order_Std =JitterClickGen(ICI2, S1Dur, Amp,  "repTail", repTail*repRatioTail, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd", "clickType", clickType);
+        Order_Dev =JitterClickGen(ICI1, S2Dur, Amp, "fs", fs, "Jitter", jitterTemp, "JitterMethod", "EvenOdd", "lastClick", lastClick , "clickType", clickType);
         for rIndex = 1 : length(repRatioHead)
             Order_Dev =ClickTrainRep(Order_Dev, Amp, "repHead", repHead*repRatioHead{rIndex}, "repTail", repTail*repRatioHead{rIndex}, "fs", fs);
             for iIndex = 1 : length(Order_Std)

@@ -15,7 +15,7 @@ Durs = repmat(S1Dur, length(ICIBase), 1);
 
 if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
     % generate Reg S1-S2
-    sounds = RegClickGen(ICIs, Durs, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick);
+    sounds = RegClickGen(ICIs, Durs, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick, "clickType", clickType);
 end
 
 %% export sounds

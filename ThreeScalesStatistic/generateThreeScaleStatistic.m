@@ -1,6 +1,6 @@
 %% Rat Linear Array
 cd(fileparts(mfilename("fullpath")));
-ID = 104;
+ID = 102.1;
 for idx =1 : length(ID)
     ThreeScalesGen("ID", ID(idx));
 end

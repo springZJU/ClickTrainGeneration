@@ -46,6 +46,8 @@ TBOffsetParams.SuccessiveDuration = mProtocol.SuccessiveDuration;
 TBOffsetParams.order = mProtocol.order;
 TBOffsetParams.BFScale = str2double(strsplit(mProtocol.BFScale, ","));
 TBOffsetParams.BFNum = mProtocol.BFNum;
+TBOffsetParams.toneRiseFall = mProtocol.toneRiseFall;
+TBOffsetParams.clickType = mProtocol.clickType;
 
 % For Offset
 TBOffsetParams.changeICI_Tail_N = str2double(strsplit(mProtocol.changeICI_Tail_N, ","));

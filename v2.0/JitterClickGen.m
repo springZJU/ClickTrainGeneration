@@ -12,6 +12,7 @@ mIp.addRequired("Duration", @(x) validateattributes(x, 'numeric', {'positive'}))
 mIp.addRequired("Amp", @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("fs", 97656, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("Jitter", [], @(x) validateattributes(x, 'numeric', {'2d'}));
+mIp.addParameter("clickType", "pulse");
 mIp.addParameter("JitterMethod", "EvenOdd", @(x) any(validatestring(x, {'EvenOdd', 'rand', 'sumConstant'})));
 mIp.addParameter("repHead", []);
 mIp.addParameter("repTail", []);
@@ -43,10 +44,20 @@ end
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
-% opts.clickDur = evalin("base", "clickDur") ; % ms
-opts.clickDur = 0.2 ; % ms
-opts.riseFallTime = 0; % ms
-click = generateClick(opts);
+clickTrainParams  = evalin("base", "clickTrainParams");
+opts.clickDur     = clickTrainParams.clickDur;
+try clickType = clickTrainParams.clickType; catch; clickType = "pulse"; end
+if strcmp(clickType, "toneBurst")
+    opts.toneRiseFall =  clickTrainParams.toneRiseFall;
+    opts.BFScale =  clickTrainParams.BFScale;
+    opts.BFNum =  clickTrainParams.BFNum;
+    click = generateToneBurst(opts);
+elseif  strcmp(clickType, "pulse")
+    opts.riseFallTime = 0; % ms
+    click = generateClick(opts);
+else
+    error("illegal click type!!!");
+end
 
 %% for single click train
 opts.click = click;

@@ -31,8 +31,8 @@ for dIndex = 1 : length(S1Dur)
 
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
         % generate Reg S1-S2
-        Std =RegClickGen(ICI1, Dur, Amp, "fs", fs);
-        Dev =RegClickGen(ICI2, Dur, Amp, "fs", fs);
+        Std =RegClickGen(ICI1, Dur, Amp, "fs", fs, "clickType", clickType);
+        Dev =RegClickGen(ICI2, Dur, Amp, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         sounds(dIndex) = merge_Oscillation("Seq_Tag", "S1_S2", "Std_Wave", Std, "Dev_Wave", Dev, "soundType", "Reg");
         sounds(dIndex).Name = strcat(sounds(dIndex).Name, "_Dur-", num2str(Dur), "ms.wav");
     end

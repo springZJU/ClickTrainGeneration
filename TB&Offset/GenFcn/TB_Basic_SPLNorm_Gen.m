@@ -21,8 +21,8 @@ for rIndex = 1 : length(repNs)
     ICI1 = ICI1(idx); ICI2 = ICI2(idx);
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
         % generate Reg S1-S2
-        Order_Std =RegClickGen(ICI1, S1Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
-        Order_Dev =RegClickGen(ICI2, S2Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+        Order_Std =RegClickGen(ICI1, S1Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "clickType", clickType);
+        Order_Dev =RegClickGen(ICI2, S2Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for dIndex = 1 : length(Order_Dev)
             Order_Dev(dIndex).Wave = Order_Dev(dIndex).Wave * ICI2(dIndex)/ICI1(dIndex);
         end
@@ -31,8 +31,8 @@ for rIndex = 1 : length(repNs)
         end
 
         % generate Reg S2-S1
-        Order_Std =RegClickGen(ICI2, S1Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
-        Order_Dev =RegClickGen(ICI1, S2Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+        Order_Std =RegClickGen(ICI2, S1Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "clickType", clickType);
+        Order_Dev =RegClickGen(ICI1, S2Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for dIndex = 1 : length(Order_Std)
             Order_Std(dIndex).Wave = Order_Std(dIndex).Wave * ICI2(dIndex)/ICI1(dIndex);
         end
@@ -51,8 +51,8 @@ for rIndex = 1 : length(repNs)
             save("irregICISampNBase.mat","irregICISampNBase", "-mat");
         end
         % generate Irreg S1-S2
-        Order_Std =IrregClickGen(ICI1, S1Dur, Amp, "baseICI", 4, "variance", 2, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
-        Order_Dev =IrregClickGen(ICI2, S2Dur, Amp, "baseICI", 4, "variance", 2, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+        Order_Std =IrregClickGen(ICI1, S1Dur, Amp, "baseICI", 4, "variance", 2, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "clickType", clickType);
+        Order_Dev =IrregClickGen(ICI2, S2Dur, Amp, "baseICI", 4, "variance", 2, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for dIndex = 1 : length(Order_Dev)
             Order_Dev(dIndex).Wave = Order_Dev(dIndex).Wave * ICI2(dIndex)/ICI1(dIndex);
         end
@@ -61,8 +61,8 @@ for rIndex = 1 : length(repNs)
         end
 
         % generate Irreg S2-S1
-        Order_Std =IrregClickGen(ICI2, S1Dur, Amp, "baseICI", 4, "variance", 2, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
-        Order_Dev =IrregClickGen(ICI1, S2Dur, Amp, "baseICI", 4, "variance", 2, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+        Order_Std =IrregClickGen(ICI2, S1Dur, Amp, "baseICI", 4, "variance", 2, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "clickType", clickType);
+        Order_Dev =IrregClickGen(ICI1, S2Dur, Amp, "baseICI", 4, "variance", 2, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for dIndex = 1 : length(Order_Std)
             Order_Std(dIndex).Wave = Order_Std(dIndex).Wave * ICI2(dIndex)/ICI1(dIndex);
         end
