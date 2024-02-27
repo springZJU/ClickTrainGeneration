@@ -41,6 +41,7 @@ end
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
+
 clickTrainParams  = evalin("base", "clickTrainParams");
 opts.clickDur     = clickTrainParams.clickDur;
 try clickType = clickTrainParams.clickType; catch; clickType = "pulse"; end

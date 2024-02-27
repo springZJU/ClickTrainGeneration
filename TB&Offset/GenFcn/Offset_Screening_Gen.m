@@ -6,7 +6,7 @@ repN = repRatio(1 : repNs);
 %% Generate Click Trains
 if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
     % generate Reg S1-S2
-    sounds = RegClickGen(ICIBase, S1Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick);
+    sounds = RegClickGen(ICIBase, S1Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick, "clickType", clickType);
 end
 
 
