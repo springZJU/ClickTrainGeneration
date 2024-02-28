@@ -12,7 +12,7 @@ xlsxPath = mIp.Results.xlsxPath;
 ID = mIp.Results.ID;
 
 TBOffsetParams = ParseTB_Offset_Params(xlsxPath, ID);
-assignin("caller", "fs", TBOffsetParams.fs);
+assignin("base", "clickTrainParams", TBOffsetParams);
 
 %% generate sounds
 TBOffsetParams.GenFcn(TBOffsetParams);

@@ -11,6 +11,7 @@ mIp.addRequired("ICIs", @(x) validateattributes(x, 'numeric', {'vector'}));
 mIp.addRequired("Duration", @(x) validateattributes(x, 'numeric', {'positive'}));
 mIp.addRequired("Amp", @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("fs", 97656, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
+mIp.addParameter("clickType", "pulse");
 mIp.addParameter("repHead", []);
 mIp.addParameter("repTail", []);
 mIp.addParameter("localChange", []);
@@ -21,6 +22,7 @@ mIp.addParameter("lastClick", false, @(x) any([islogical(x), isnumeric(x)]));
 mIp.parse(ICIs, Duration, Amp, varargin{:});
 
 fs = mIp.Results.fs;
+clickType = mIp.Results.clickType;
 repHead = mIp.Results.repHead;
 repTail = mIp.Results.repTail;
 localChange = mIp.Results.localChange;
@@ -29,20 +31,31 @@ changeICI_Head_N = mIp.Results.changeICI_Head_N;
 change_TimePoint = mIp.Results.change_TimePoint;
 lastClick = logical(mIp.Results.lastClick);
 
-if size(ICIs, 1) ~= numel(ICIs)
+if ~iscolumn(ICIs)
     ICIs = ICIs';
 end
-if size(Duration, 1) ~= numel(Duration)
+if ~iscolumn(Duration)
     Duration = Duration';
 end
 
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
-opts.clickDur = 0.2 ; % ms
-opts.riseFallTime = 0; % ms
-click = generateClick(opts);
 
+clickTrainParams  = evalin("base", "clickTrainParams");
+opts.clickDur     = clickTrainParams.clickDur;
+try clickType = clickTrainParams.clickType; catch; clickType = "pulse"; end
+if strcmp(clickType, "toneBurst")
+    opts.toneRiseFall =  clickTrainParams.toneRiseFall;
+    opts.BFScale =  clickTrainParams.BFScale;
+    opts.BFNum =  clickTrainParams.BFNum;
+    click = generateToneBurst(opts);
+elseif  strcmp(clickType, "pulse")
+    opts.riseFallTime = 0; % ms
+    click = generateClick(opts);
+else
+    error("illegal click type!!!");
+end
 %% for single click train
 opts.click = click;
 opts.trainLength = 100; % ms, single train
@@ -97,7 +110,7 @@ if lastClick
     singleRegWave = cellfun(@(x) [x; click'], singleRegWave, "UniformOutput", false);
 end
 
-
+ICIs = repmat(ICIs, length(Duration), 1);
 c_ICIs = num2cell(ICIs);
 c_Wave = singleRegWave;
 c_OnsetIdx = cellfun(@(x) [1; find(diff(x) > 0) + 1], singleRegWave, "uni", false);

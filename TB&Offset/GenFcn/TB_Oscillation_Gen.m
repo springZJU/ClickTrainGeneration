@@ -26,13 +26,13 @@ for dIndex = 1 : length(S1Dur)
     %     sounds(dIndex).Info = strcat("Oscillation_Dur", string(S1Dur(dIndex)), "ms");
 
     %% Generate Click Trains
-    ICI1 = repmat(ICIBase, SuccessiveDuration/2/Dur, 1);
+    ICI1 = repmat(ICIBase, round(SuccessiveDuration/2/Dur), 1);
     ICI2 = ICI1*ratio;
 
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
         % generate Reg S1-S2
-        Std =RegClickGen(ICI1, Dur, Amp, "fs", fs);
-        Dev =RegClickGen(ICI2, Dur, Amp, "fs", fs);
+        Std =RegClickGen(ICI1, Dur, Amp, "fs", fs, "clickType", clickType);
+        Dev =RegClickGen(ICI2, Dur, Amp, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         sounds(dIndex) = merge_Oscillation("Seq_Tag", "S1_S2", "Std_Wave", Std, "Dev_Wave", Dev, "soundType", "Reg");
         sounds(dIndex).Name = strcat(sounds(dIndex).Name, "_Dur-", num2str(Dur), "ms.wav");
     end

@@ -19,16 +19,16 @@ for vIndex = 1 : length(ICIs)
             load("Offset_Var_irregICISampNBase.mat");
         end
         if ~exist("Offset_Var_irregICISampNBase", "var")
-            [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+            [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
             Offset_Var_irregICISampNBase.(strcat("Var", string(Var))) = irregICISampNBase;
         elseif ~isfield(Offset_Var_irregICISampNBase, strcat("Var", string(Var)))
-            [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+            [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
             Offset_Var_irregICISampNBase.(strcat("Var", string(Var))) = irregICISampNBase;
         else
             irregICISampNBase = Offset_Var_irregICISampNBase.(strcat("Var", string(Var)));
         end
     end
-    sounds(vIndex) = IrregClickGen(ICIs(vIndex), S1Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", 1);
+    sounds(vIndex) = IrregClickGen(ICIs(vIndex), S1Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick, "clickType", clickType);
 end
 %% export sounds
 mkdir(rootPath)

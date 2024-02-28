@@ -23,3 +23,8 @@ for sIndex = 1 : length(sounds)
 end
 
 save(fullfile(rootPath, "sounds.mat"), "sounds");
+
+
+figure
+plot((1:1:length(ToneCF{1}))/fs, ToneCF{1});
+xlim([0, 0.2])

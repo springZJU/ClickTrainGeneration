@@ -5,14 +5,13 @@ function waveOutput = GradClickGen(ICIs, Duration, Amp, varargin)
 % fs: sample rate of the signal, default:97656
 
 % EXAMPLE: regClick = RegClickGen(4, 2000, 1, "fs", 1000);
-
 mIp = inputParser;
 mIp.addRequired("ICIs", @(x) validateattributes(x, 'numeric', {'vector'}));
 mIp.addRequired("Duration", @(x) validateattributes(x, 'numeric', {'positive'}));
 mIp.addRequired("Amp", @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("fs", 97656, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("ICIRangeRatio", [0.3, 1.7], @(x) validateattributes(x, 'numeric', { '2d', 'positive'}));
-mIp.addParameter("Type", "ascend", @(x) validatestruct(x, any({'ascend', 'descend', 'ascend_Osci', 'descend_Osci', 'regular'})));
+mIp.addParameter("Type", "ascend", @(x) any(validatestring(x, {'ascend', 'descend', 'ascend_Osci', 'descend_Osci', 'regular'})));
 mIp.addParameter("n_cycles", 1, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
 mIp.addParameter("repHead", []);
 mIp.addParameter("repTail", []);
@@ -45,9 +44,20 @@ end
 %% generate single click
 opts.fs = fs;
 opts.Amp = Amp;
-opts.clickDur = 0.2 ; % ms
-opts.riseFallTime = 0; % ms
-click = generateClick(opts);
+clickTrainParams  = evalin("base", "clickTrainParams");
+opts.clickDur     = clickTrainParams.clickDur;
+try clickType = clickTrainParams.clickType; catch; clickType = "pulse"; end
+if strcmp(clickType, "toneBurst")
+    opts.toneRiseFall =  clickTrainParams.toneRiseFall;
+    opts.BFScale =  clickTrainParams.BFScale;
+    opts.BFNum =  clickTrainParams.BFNum;
+    click = generateToneBurst(opts);
+elseif  strcmp(clickType, "pulse")
+    opts.riseFallTime = 0; % ms
+    click = generateClick(opts);
+else
+    error("illegal click type!!!");
+end
 
 %% for single click train
 opts.click = click;

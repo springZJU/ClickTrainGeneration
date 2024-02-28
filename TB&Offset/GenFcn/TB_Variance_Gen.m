@@ -19,10 +19,10 @@ for vIndex = 1 : length(sigma)
             load("TB_Var_irregICISampNBase.mat");
         end
         if ~exist("TB_Var_irregICISampNBase", "var")
-            [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+            [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "clickType", clickType);
             TB_Var_irregICISampNBase.(strcat("Var", string(Var))) = irregICISampNBase;
         elseif~isfield(TB_Var_irregICISampNBase, strcat("Var", string(Var)))
-            [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+            [~, irregICISampNBase] =IrregClickGen(ICIBase, max([S1Dur, S2Dur]), Amp, "baseICI", 4, "variance", Var, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
             TB_Var_irregICISampNBase.(strcat("Var", string(Var))) = irregICISampNBase;
         else
             irregICISampNBase = TB_Var_irregICISampNBase.(strcat("Var", string(Var)));
@@ -30,15 +30,15 @@ for vIndex = 1 : length(sigma)
 
 
         % generate Irreg S1-S2
-        Order_Std = IrregClickGen(ICI1, S1Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
-        Order_Dev =IrregClickGen(ICI2, S2Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+        Order_Std = IrregClickGen(ICI1, S1Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "clickType", clickType);
+        Order_Dev =IrregClickGen(ICI2, S2Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for iIndex = 1 : length(Order_Std)
             sounds(vIndex).Wave(iIndex) = merge_S1S2("Seq_Tag", "S1_S2", "Std_Wave", Order_Std(iIndex), "Dev_Wave", Order_Dev(iIndex), "soundType", "Irreg");
         end
 
         % generate Irreg S2-S1
-        Order_Std =IrregClickGen(ICI2, S1Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
-        Order_Dev =IrregClickGen(ICI1, S2Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+        Order_Std =IrregClickGen(ICI2, S1Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "clickType", clickType);
+        Order_Dev =IrregClickGen(ICI1, S2Dur, Amp, "baseICI", 4, "variance", Var, "irregICISampNBase", irregICISampNBase, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for iIndex = 1 : length(Order_Dev)
             sounds(vIndex).Wave(iIndex+length(Order_Std)) = merge_S1S2("Seq_Tag", "S2_S1", "Std_Wave", Order_Std(iIndex), "Dev_Wave", Order_Dev(iIndex), "soundType", "Irreg");
         end

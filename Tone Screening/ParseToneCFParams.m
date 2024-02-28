@@ -20,9 +20,15 @@ ToneCFParams.ParentFolderName = mProtocol.ParentFolderName;
 ToneCFParams.freqStart = mProtocol.freqStart;
 ToneCFParams.freqEnd = mProtocol.freqEnd;
 ToneCFParams.freqN = mProtocol.freqN;
-ToneCFParams.singleDur = mProtocol.singleDur;
+ToneCFParams.singleDur = str2double(strsplit(mProtocol.singleDur, ","));
 ToneCFParams.riseFallTime = mProtocol.riseFallTime;
 ToneCFParams.Attenuation = str2double(strsplit(mProtocol.Attenuation, ","));
+
+% For Tone Local Change
+ToneCFParams.LocalPos = str2double(strsplit(mProtocol.LocalPos, ","));
+ToneCFParams.LocalDur = str2double(strsplit(mProtocol.LocalDur, ","));
+ToneCFParams.LocalRatio = str2double(strsplit(mProtocol.LocalRatio, ","));
+
 eval(strcat("ToneCFParams.GenFcn = ", string(mProtocol.GenFcn), ";"));
 end
 

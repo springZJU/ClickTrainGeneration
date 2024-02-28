@@ -7,10 +7,10 @@ for rIndex = 1 : length(repNs)
     rootPath = fullfile("..\..\", ParentFolderName, strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 
     repN = repRatio(1 : repNs(rIndex));
-    if ~isempty(repN)
-        sounds(rIndex).Info = strcat("repN", string(repNs(rIndex)), "-", strjoin(string(repN), "_"));
+    if repNs(rIndex)>0
+        sounds(rIndex).Info = strcat("InsertN", string(repNs(rIndex)), "-", string(repN(1)));
     else
-        sounds(rIndex).Info = strcat("No-Rep");
+        sounds(rIndex).Info = strcat("No-Inert");
     end
 
 
@@ -21,15 +21,15 @@ for rIndex = 1 : length(repNs)
     ICI1 = ICI1(idx); ICI2 = ICI2(idx);
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
         % generate Reg S1-S2
-        Order_Std =RegClickGen(ICI1, S1Dur, Amp,  "repTail", repTail*repN, "fs", fs);
-        Order_Dev =RegClickGen(ICI2, S2Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+        Order_Std =RegClickGen(ICI1, S1Dur, Amp,  "repTail", repTail*repN, "fs", fs, "clickType", clickType);
+        Order_Dev =RegClickGen(ICI2, S2Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for iIndex = 1 : length(Order_Std)
             sounds(rIndex).Wave(iIndex) = merge_S1S2("Seq_Tag", "S1_S2", "Std_Wave", Order_Std(iIndex), "Dev_Wave", Order_Dev(iIndex), "soundType", "Reg");
         end
 
         % generate Reg S2-S1
-        Order_Std =RegClickGen(ICI2, S1Dur, Amp, "repTail", repTail*repN, "fs", fs);
-        Order_Dev =RegClickGen(ICI1, S2Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs);
+        Order_Std =RegClickGen(ICI2, S1Dur, Amp, "repTail", repTail*repN, "fs", fs, "clickType", clickType);
+        Order_Dev =RegClickGen(ICI1, S2Dur, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", lastClick , "clickType", clickType);
         for iIndex = 1 : length(Order_Dev)
             sounds(rIndex).Wave(iIndex+length(Order_Std)) = merge_S1S2("Seq_Tag", "S2_S1", "Std_Wave", Order_Std(iIndex), "Dev_Wave", Order_Dev(iIndex), "soundType", "Reg");
         end

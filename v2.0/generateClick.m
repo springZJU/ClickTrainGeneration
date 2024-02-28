@@ -1,9 +1,6 @@
 %--------------------------to generate single click------------
 function signal = generateClick(opts)
-optsNames = fieldnames(opts);
-for index = 1:size(optsNames, 1)
-    eval([optsNames{index}, '=opts.', optsNames{index}, ';']);
-end
+parseStruct(opts);
 
 clickDurN = ceil(clickDur/1000*fs);
 riseFallN = ceil(riseFallTime/1000*fs);

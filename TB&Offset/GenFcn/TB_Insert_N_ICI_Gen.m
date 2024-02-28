@@ -11,7 +11,10 @@ end
 rootPath = fullfile("..\..\", ParentFolderName, strcat(datestr(now, "yyyy-mm-dd"), "_", folderName));
 repN = repRatio(1 : repNs);
 ICIs = reshape(repmat(ICIBase', length(S1Dur), 1), [], 1);
-Durs = repmat(S1Dur, length(ICIBase), 1);
+Durs = S1Dur;
+% DurAll = repmat(S1Dur, length(localChange), 1);
+
+% Durs = repmat(S1Dur, length(ICIBase), 1);
 DurAll = repmat(S1Dur, length(ICIBase)*length(localChange), 1);
 ICIAll = repmat(ICIs, length(localChange), 1);
 changeICI = cell2mat(cellfun(@(x) ICIs*x, localChange, "UniformOutput", false));
@@ -20,7 +23,7 @@ changeICIStr = string(cellfun(@(x) ['_ChangeICI', num2str(x(1)), '_Interval', nu
 for lIndex = 1 : length(localChange)
     if contains(soundType, ["Reg&Irreg", "Reg"]) % for regualr
         % generate Reg S1-S2
-        sounds((length(ICIs)-1)*lIndex+1 : length(ICIs)*lIndex) = RegClickGen(ICIs, Durs, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", 1, "localChange", localChange{lIndex, 1}, "change_TimePoint", change_TimePoint);
+        sounds((length(ICIs)-1)*(lIndex-1)+1 : length(ICIs)*lIndex) = RegClickGen(ICIs, Durs, Amp, "repHead", repHead*repN, "repTail", repTail*repN, "fs", fs, "lastClick", 1, "localChange", localChange{lIndex, 1}, "change_TimePoint", change_TimePoint, "lastClick", lastClick, "clickType", clickType);
     end
 end
 

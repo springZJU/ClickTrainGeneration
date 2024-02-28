@@ -13,6 +13,7 @@ ID = mIp.Results.ID;
 
 MSTIParams = ParseMSTI_Params(xlsxPath, ID);
 assignin("caller", "fs", MSTIParams.fs);
+assignin("base", "clickDur", TBOffsetParams.clickDur);
 
 %% generate sounds
 MSTIParams.GenFcn(MSTIParams);
