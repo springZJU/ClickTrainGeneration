@@ -1,6 +1,6 @@
 clear; clc
 
-loadPath = 'I:\Programe\EEGOffset\App\sounds\4';
+loadPath = 'I:\DATA_202305_HumenEEG_MSTI\HumenEEGSounds\MSTI\20230518';
 tCutoff = 18;
 files = dir(loadPath);
 files(matches({files.name}, ".") | matches({files.name}, "..") | ~contains({files.name}, ".wav")) = [];

@@ -52,7 +52,7 @@ Onsettemp = 1/fs +  [0; cumsum(vertcat(Wholetemp.Duration))];
 res.Tag = Seq_Tag;
 res.Wave = cell2mat({Wholetemp.Wave}');
 res.ICISeq = vertcat(Wholetemp(1:end-1).ICIs);
-res.S1_S2_Onset = Onsettemp(1:2:end);
+res.S1_S2_Onset = Onsettemp(1:end);
 if length(unique(vertcat(S1_Wave.ICIs))) == 1
     res.BG_End_Onset = Onsettemp(end - 1) + S1_Wave(1).LastClickOnset + 1/fs;
     res.Omission_Point = res.BG_End_Onset + S1_Wave(1).Duration; 
