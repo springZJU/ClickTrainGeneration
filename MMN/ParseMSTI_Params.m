@@ -43,7 +43,7 @@ MSTIParams.scaleFactor = mProtocol.scaleFactor;
 MSTIParams.ManyStd_Range = str2double(strsplit(mProtocol.ManyStd_Range, ","))';
 MSTIParams.ManyStd_Apply = mProtocol.ManyStd_Apply;
 MSTIParams.ManyStd_Rand = mProtocol.ManyStd_Rand;
-MSTIParams.nTrials = mProtocol.nTrials;
+% MSTIParams.nTrials = mProtocol.nTrials;
 
 % Others
 MSTIParams.soundType = mProtocol.soundType;

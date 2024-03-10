@@ -1,7 +1,7 @@
 clear;
 %% MLA_MMN_5_4.5_4
-meanNum1 = 40;
-devType = 3;
+meanNum1 = 30;
+devType = 4;
 SAVEPATH = 'M:\Random sequence stimuli\constant 6s ICI2,8,16';
 orders = repmat((1:devType)', meanNum1, 1);
 atts = repmat((ones(devType, 1) * 21.2)', meanNum1, 1); %
@@ -35,6 +35,7 @@ params.attMLAMSTI_G4_BG_STD_DEV_BG = atts(idx);
 generateParamsFiles(SAVEPATH, params);
 
 %% MLA_MSTIomi
+clear;clc;
 meanNum1 = 30;
 devType = 4;
 SAVEPATH = 'D:\ratClickTrain\parameters';
@@ -43,6 +44,6 @@ atts = repmat((ones(devType, 1) * 21.2)', meanNum1, 1); %
 idx =randperm(meanNum1 * devType);
 % params.orderMSTIomi_G2 = orders(idx);
 % params.attMSTIomi_G2 = atts(idx);
-params.orderMSTI_G4 = orders(idx);
-params.attMSTI_G4 = atts(idx);
+params.order_G4_30 = orders(idx);
+params.att_G4_30 = atts(idx);
 generateParamsFiles(SAVEPATH, params);
