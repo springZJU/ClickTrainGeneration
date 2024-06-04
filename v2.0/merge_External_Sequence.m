@@ -1,13 +1,17 @@
 function res = merge_External_Sequence(soundSeq, varargin)
 mIp = inputParser;
 mIp.addRequired("soundSeq", @(x) isstruct(x));
-mIp.addParameter("Seq_Tag", [], @(x) any(validatestring(x, {'S1_S2', 'S2_S1', 'ManyStd_S2', 'ManyStd_S1', 'Rand_S2', 'Rand_S1'})));
+% mIp.addParameter("Seq_Tag", [], @(x) any(validatestring(x, {'S1_S2', 'S2_S1', 'ManyStd_S2', 'ManyStd_S1', 'Rand_S2', 'Rand_S1'})));
+mIp.addParameter("Seq_Tag", []);
+
 mIp.addParameter("ISI", 1000, @(x) length(x) == 1 | length(x) == length(soundSeq));
 mIp.addParameter("fs", soundSeq(1).fs, @(x) validateattributes(x, 'numeric', {'numel', 1, 'positive'}));
+mIp.addParameter("successive", 0, @(x) validateattributes(x, 'numeric', {'numel', 1}));
 mIp.parse(soundSeq, varargin{:});
 Seq_Tag = mIp.Results.Seq_Tag;
 ISI = mIp.Results.ISI;
 fs = mIp.Results.fs;
+successive = mIp.Results.successive;
 
 if length(ISI) ~= length(soundSeq)
     if length(ISI) == 1
@@ -36,6 +40,12 @@ end
 if iscolumn(temp)
     temp = temp';
 end
+
+if successive > 0
+    temp = repmat(temp, 1, successive);
+    ISI  = repmat(reshape(ISI, [], 1), successive, 1);
+end
+temp(find(temp > 0, 1, "last") + 1 : end) = [];
 res.Tag = Seq_Tag;
 res.onsetSeq = [0; cumsum(ISI(1:end-1))];
 res.Wave = temp;

@@ -1,6 +1,9 @@
 cd(fileparts(mfilename("fullpath")));
 %% generate sound
-multiTone = MultiToneGen("ID", 1);
+IDs = [14, 16];
+for id = IDs
+    multiTone = MultiToneGen("ID", id);
+end
 
 
 

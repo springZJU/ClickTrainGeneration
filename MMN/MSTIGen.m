@@ -12,8 +12,7 @@ xlsxPath = mIp.Results.xlsxPath;
 ID = mIp.Results.ID;
 
 MSTIParams = ParseMSTI_Params(xlsxPath, ID);
-assignin("caller", "fs", MSTIParams.fs);
-assignin("base", "clickDur", TBOffsetParams.clickDur);
+assignin("base", "MSTIParams", MSTIParams);
 
 %% generate sounds
 MSTIParams.GenFcn(MSTIParams);

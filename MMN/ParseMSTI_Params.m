@@ -28,14 +28,8 @@ MSTIParams.BG_End_Dur = mProtocol.BG_End_Dur;
 MSTIParams.stdDur = str2double(strsplit(mProtocol.stdDur, ","))';
 MSTIParams.devDur = str2double(strsplit(mProtocol.devDur, ","))';
 MSTIParams.stdNum = mProtocol.stdNum;
+MSTIParams.successive = mProtocol.successive;
 
-% For Temporal Bindings
-MSTIParams.ISI = str2double(strsplit(mProtocol.ISI, ","))';
-MSTIParams.BG_Start_Dur = mProtocol.BG_Start_Dur;
-MSTIParams.BG_End_Dur = mProtocol.BG_End_Dur;
-MSTIParams.stdDur = str2double(strsplit(mProtocol.stdDur, ","))';
-MSTIParams.devDur = str2double(strsplit(mProtocol.devDur, ","))';
-MSTIParams.stdNum = mProtocol.stdNum;
 
 MSTIParams.BG_Base = mProtocol.BG_Base;
 MSTIParams.S1_S2_Base = str2double(strsplit(mProtocol.S1_S2_Base, ","))';
@@ -43,6 +37,7 @@ MSTIParams.scaleFactor = mProtocol.scaleFactor;
 MSTIParams.ManyStd_Range = str2double(strsplit(mProtocol.ManyStd_Range, ","))';
 MSTIParams.ManyStd_Apply = mProtocol.ManyStd_Apply;
 MSTIParams.ManyStd_Rand = mProtocol.ManyStd_Rand;
+MSTIParams.ManyStd_RandIdx = str2double(strsplit(mProtocol.ManyStd_RandIdx, ","))';
 MSTIParams.nTrials = mProtocol.nTrials;
 
 % Others
